@@ -1,12 +1,20 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Platform } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+
+import Octicons from "@expo/vector-icons/Octicons";
+import Feather from "@expo/vector-icons/Feather";
+
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { MainColors, GrayColors } from "@/constants/Colors";
+
 export default function TabLayout() {
+  // 현재 기기의 Safe Area 여백(insets) 값
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
@@ -16,30 +24,60 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
+
+        tabBarStyle: {
+          position: "relative",
+          height: insets.bottom + 70,
+          paddingTop: 12,
+          backgroundColor: GrayColors.white,
+          borderColor: GrayColors.gray20,
+          elevation: 4, // Android 그림자
+          shadowOpacity: 0.05, // iOS 그림자
+        },
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: "Home",
+          title: "홈",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <Octicons size={24} name="home" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="problem"
         options={{
-          title: "Explore",
+          title: "문제집",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <Feather size={24} name="folder-plus" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="record"
+        options={{
+          title: "기록",
+          tabBarIcon: ({ color }) => (
+            <Octicons size={24} name="pencil" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="stats"
+        options={{
+          title: "통계",
+          tabBarIcon: ({ color }) => (
+            <Feather size={24} name="bar-chart-2" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="my"
+        options={{
+          title: "내 정보",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={24} name="paperplane.fill" color={color} />
           ),
         }}
       />

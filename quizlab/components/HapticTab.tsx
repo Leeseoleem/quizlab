@@ -1,3 +1,4 @@
+import { MainColors } from "@/constants/Colors";
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { PlatformPressable } from "@react-navigation/elements";
 import * as Haptics from "expo-haptics";
@@ -12,6 +13,8 @@ export function HapticTab(props: BottomTabBarButtonProps) {
   return (
     <PlatformPressable
       {...props}
+      pressColor={MainColors.tertiary} // 터치 시 물결 효과
+      pressOpacity={0.3} //For ios
       onPressIn={(ev) => {
         if (process.env.EXPO_OS === "ios") {
           // Add a soft haptic feedback when pressing down on the tabs.

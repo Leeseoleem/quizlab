@@ -6,7 +6,9 @@ import "./global.css";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    "Gmarket-Bold": require("../assets/fonts/GmarketSansTTFBold.ttf"),
+    "Gmarket-Medium": require("../assets/fonts/GmarketSansTTFMedium.ttf"),
+    "Gmarket-Light": require("../assets/fonts/GmarketSansTTFLight.ttf"),
   });
 
   if (!loaded) {

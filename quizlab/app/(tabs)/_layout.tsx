@@ -28,11 +28,16 @@ export default function TabLayout() {
         tabBarStyle: {
           position: "relative",
           height: insets.bottom + 70,
-          paddingTop: 12,
+          paddingTop: 8,
           backgroundColor: GrayColors.white,
           borderColor: GrayColors.gray20,
           elevation: 4, // Android 그림자
           shadowOpacity: 0.05, // iOS 그림자
+        },
+
+        tabBarLabelStyle: {
+          fontFamily: "Gmarket-Medium",
+          fontSize: 10,
         },
       }}
     >
@@ -77,7 +82,7 @@ export default function TabLayout() {
         options={{
           title: "내 정보",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="paperplane.fill" color={color} />
+            <Octicons size={24} name="person-fill" color={color} />
           ),
         }}
       />

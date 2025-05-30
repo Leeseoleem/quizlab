@@ -7,7 +7,13 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        gmarket: ["Gmarket-Medium"],
+        "gmarket-bold": ["Gmarket-Bold"],
+        "gmarket-light": ["Gmarket-Light"],
+      },
+    },
   },
   plugins: [],
 };

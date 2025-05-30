@@ -1,21 +1,12 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, View, Text } from "react-native";
-
-import { GrayColors } from "@/constants/Colors";
+import { View, Text } from "react-native";
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text>시작 화면</Text>
+    <SafeAreaView className="flex-1" edges={["top"]}>
+      <View className="flex-1 justify-center items-center bg-slate-400">
+        <Text className="text-5xl font-bold">Hello World!</Text>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: GrayColors.white,
-  },
-});

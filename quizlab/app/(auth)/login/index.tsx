@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, TouchableOpacity } from "react-native";
 
-export default function LoginScrenn() {
+export default function LoginScreen() {
   return (
     <SafeAreaView className="flex-1 " edges={["top"]}>
       <View>

@@ -1,10 +1,9 @@
 import { View, TouchableOpacity } from "react-native";
+import { ReactElement } from "react";
 import { BodyLg } from "../../Typography";
 
 import Feather from "@expo/vector-icons/Feather";
 import { GrayColors } from "@/constants/Colors";
-import clsx from "clsx";
-import { ReactElement } from "react";
 
 interface BackHeaderProps {
   label?: string;

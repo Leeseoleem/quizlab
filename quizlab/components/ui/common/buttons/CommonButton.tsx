@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { View, Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { BodyBtn } from "../../Typography";
 
 type ButtonType = "primary" | "secondary" | "disable";

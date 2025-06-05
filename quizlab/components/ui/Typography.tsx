@@ -106,7 +106,7 @@ export const BodySm = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx("text-sm tracking-[-2.4px] font-gmarket-light", color)}
+    className={clsx("text-sm tracking-[-0.4px] font-gmarket-light", color)}
   >
     {children}
   </Text>

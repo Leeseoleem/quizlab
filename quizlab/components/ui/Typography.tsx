@@ -36,10 +36,7 @@ export const HeadingMd = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx(
-      "text-[24px] leading-8 tracking-[-2.4px] font-gmarket",
-      color
-    )}
+    className={clsx("text-2xl tracking-[-2.4px] font-gmarket", color)}
   >
     {children}
   </Text>
@@ -53,10 +50,7 @@ export const HeadingSm = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx(
-      "text-[20px] leading-7 tracking-[-0.8px] font-gmarket",
-      color
-    )}
+    className={clsx("text-xl tracking-[-0.8px] font-gmarket", color)}
   >
     {children}
   </Text>
@@ -70,10 +64,7 @@ export const BodyLg = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx(
-      "text-[18px] leading-6 tracking-[-0.8px] font-gmarket",
-      color
-    )}
+    className={clsx("text-lg tracking-[-0.8px] font-gmarket", color)}
   >
     {children}
   </Text>
@@ -87,10 +78,7 @@ export const BodyMd = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx(
-      "text-[16px] leading-[22px] tracking-[-0.8px] font-gmarket",
-      color
-    )}
+    className={clsx("text-base tracking-[-0.8px] font-gmarket", color)}
   >
     {children}
   </Text>
@@ -104,10 +92,7 @@ export const BodyBtn = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx(
-      "text-[14px] leading-[20px] tracking-[-0.8px] font-gmarket",
-      color
-    )}
+    className={clsx("text-sm tracking-[-0.8px] font-gmarket", color)}
   >
     {children}
   </Text>
@@ -121,10 +106,7 @@ export const BodySm = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx(
-      "text-[14px] leading-[18px] tracking-[-2.4px] font-gmarket-light",
-      color
-    )}
+    className={clsx("text-sm tracking-[-2.4px] font-gmarket-light", color)}
   >
     {children}
   </Text>
@@ -138,10 +120,7 @@ export const Caption = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx(
-      "text-[12px] leading-[16px] tracking-[-1.6px] font-gmarket",
-      color
-    )}
+    className={clsx("text-xs tracking-[-1.6px] font-gmarket", color)}
   >
     {children}
   </Text>

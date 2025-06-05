@@ -1,7 +1,7 @@
 import { GrayColors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
-export default function onBoardingLayout() {
+export default function OnboardingLayout() {
   return (
     <Stack
       screenOptions={{

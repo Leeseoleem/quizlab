@@ -1,8 +1,11 @@
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "./global.css";
+
+import AuthProvider from "@/providers/AuthContext";
+import AuthGate from "@/providers/AuthGate";
+import { router } from "expo-router";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -17,13 +20,9 @@ export default function RootLayout() {
   }
 
   return (
-    <>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+    <AuthProvider>
+      <AuthGate />
       <StatusBar style="auto" />
-    </>
+    </AuthProvider>
   );
 }

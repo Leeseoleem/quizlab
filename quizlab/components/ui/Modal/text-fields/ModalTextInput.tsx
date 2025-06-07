@@ -17,8 +17,7 @@ export const ModalTextInput = ({
   const [isFocused, setIsFocused] = useState(false);
 
   const textInputClass = clsx(
-    "w-full h-[52px] pl-4 pr-14 border rounded-lg font-gmarket text-sm tracking-[-0.8px]",
-    text ? "font-black" : "font-gray20",
+    "w-full h-[52px] pl-4 pr-14 border rounded-lg font-gmarket text-sm tracking-[-0.8px] text-black",
     isFocused ? "border-gray40" : "border-gray20"
   );
 
@@ -27,6 +26,7 @@ export const ModalTextInput = ({
       <TextInput
         onFocus={() => setIsFocused(true)}
         placeholder={placeholder}
+        placeholderTextColor={GrayColors.gray30}
         value={text}
         onChangeText={onChangeText}
         numberOfLines={1}

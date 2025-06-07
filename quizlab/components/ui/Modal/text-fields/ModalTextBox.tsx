@@ -1,29 +1,17 @@
 import { View } from "react-native";
-import { ModalTextInput, ModalTextInputProps } from "./ModalTextInput";
 import { Caption } from "../../Typography";
 
-interface ModalTextBoxProps extends ModalTextInputProps {
-  label: string;
-}
+import { ModalTextInput } from "./ModalTextInput";
+import { ModalLargeTextInput } from "./ModalLargeTextInput";
+import { ModalTextBoxProps } from "@/types/components/modal";
 
-export const ModalTextBox = ({
-  placeholder,
-  text,
-  onChangeText,
-  onPressClear,
-  maxLength,
-  label,
-}: ModalTextBoxProps) => {
+export const ModalTextBox = (props: ModalTextBoxProps) => {
+  const { type, label } = props;
   return (
     <View className="w-full gap-2">
       <Caption>{label}</Caption>
-      <ModalTextInput
-        placeholder={placeholder}
-        text={text}
-        onChangeText={onChangeText}
-        onPressClear={onPressClear}
-        maxLength={maxLength}
-      />
+      {type === "default" && <ModalTextInput {...props} />}
+      {type === "large" && <ModalLargeTextInput {...props} />}
     </View>
   );
 };

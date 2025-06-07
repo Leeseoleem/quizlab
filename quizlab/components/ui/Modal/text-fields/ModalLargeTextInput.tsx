@@ -16,7 +16,8 @@ export const ModalLargeTextInput = ({
   const textInputClass = clsx(
     "w-full h-[96px] px-4 border rounded-lg font-gmarket text-sm tracking-[-0.8px]",
     text ? "font-black" : "font-gray20",
-    isFocused ? "border-gray40" : "border-gray20"
+    (text && !isFocused) || isFocused ? "border-gray40" : "border-gray20",
+    text && !isFocused && "bg-gray20"
   );
 
   return (

@@ -1,17 +1,11 @@
 import { useState } from "react";
 import { View, TextInput } from "react-native";
 
+import { DefaultInputProps } from "@/types/components/modal";
+
 import Octicons from "@expo/vector-icons/Octicons";
 import { GrayColors } from "@/constants/Colors";
 import clsx from "clsx";
-
-export interface ModalTextInputProps {
-  placeholder: string;
-  text: string;
-  onChangeText: (text: string) => void;
-  onPressClear: () => void;
-  maxLength?: number;
-}
 
 export const ModalTextInput = ({
   placeholder,
@@ -19,7 +13,7 @@ export const ModalTextInput = ({
   onChangeText,
   onPressClear,
   maxLength,
-}: ModalTextInputProps) => {
+}: DefaultInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const textInputClass = clsx(

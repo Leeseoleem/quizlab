@@ -28,7 +28,7 @@ export const BottomModalContainer = ({
           {...props}
           appearsOnIndex={0}
           disappearsOnIndex={-1}
-          pressBehavior="close" // ✅ 이게 핵심
+          pressBehavior="close"
         />
       )}
     >

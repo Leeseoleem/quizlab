@@ -12,8 +12,8 @@ import {
 } from "@/constants/onboarding";
 import { ROUTES } from "@/constants/routes";
 
-import { OnboardingImage } from "@/components/onboading/OnboardingImage";
-import { OnboardingDot } from "@/components/onboading/OnboardingDot";
+import { OnboardingImage } from "@/components/auth/onboading/OnboardingImage";
+import { OnboardingDot } from "@/components/auth/onboading/OnboardingDot";
 import { RoundButton } from "@/components/ui/common/buttons/RoundButton";
 
 export default function OnboardingScreen() {

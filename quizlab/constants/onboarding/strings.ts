@@ -14,4 +14,5 @@ export const OnboardingStrings = {
     subtitle:
       "얼마나 풀었고 얼마나 맞췄는지,\n공부한 기록이 전부 차곡차곡 모여 있어요.",
   },
+  button: "시작하기",
 };

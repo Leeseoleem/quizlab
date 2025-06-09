@@ -11,7 +11,7 @@ interface FromProps {
   value: string;
   onChangeText: (text: string) => void;
   error: boolean;
-  helperText: string;
+  helperText: string | null;
   helperColor?: string;
   keyboardType?: TextInputProps["keyboardType"];
 }

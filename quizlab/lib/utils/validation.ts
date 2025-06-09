@@ -3,7 +3,7 @@ import {
   EmailMessages,
   PASSWORD_VALIDATION,
   PasswordMessages,
-} from "@/constants/auth/validationStrings.js";
+} from "@/constants/auth/validationStrings";
 
 // 이메일 유효성 검사 함수
 export const getEmailErrorMessage = (email: string): string | null => {

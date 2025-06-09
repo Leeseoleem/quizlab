@@ -120,7 +120,7 @@ export const Caption = ({
 }: CustomTextProps) => (
   <Text
     {...props}
-    className={clsx("text-xs tracking-[-1.6px] font-gmarket", color)}
+    className={clsx("text-xs tracking-[-1.2px] font-gmarket", color)}
   >
     {children}
   </Text>

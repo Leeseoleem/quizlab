@@ -6,7 +6,7 @@ import { ROUTES } from "@/constants/routes";
 
 export const AuthBottomText = () => {
   return (
-    <View className="flex-row w-full justify-center">
+    <View className="flex-row w-full justify-center gap-1">
       <Caption color="text-gray30">아직 회원이 아니신가요?</Caption>
       <TouchableOpacity onPress={() => router.push(ROUTES.SIGNUP)}>
         <Caption color="text-primary">회원가입</Caption>

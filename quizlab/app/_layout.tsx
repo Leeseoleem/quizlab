@@ -6,6 +6,7 @@ import "./global.css";
 import AuthProvider from "@/providers/AuthContext";
 import AuthGate from "@/providers/AuthGate";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { PaperProvider } from "react-native-paper";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -21,10 +22,12 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
-      <AuthProvider>
-        <AuthGate />
-        <StatusBar style="auto" />
-      </AuthProvider>
+      <PaperProvider>
+        <AuthProvider>
+          <AuthGate />
+          <StatusBar style="auto" />
+        </AuthProvider>
+      </PaperProvider>
     </GestureHandlerRootView>
   );
 }

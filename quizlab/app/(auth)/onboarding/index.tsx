@@ -10,6 +10,7 @@ import {
   onboardingTitleStyle,
   onboardingSubtitleStyle,
 } from "@/constants/onboarding";
+import { ROUTES } from "@/constants/routes";
 
 import { OnboardingImage } from "@/components/onboading/OnboardingImage";
 import { OnboardingDot } from "@/components/onboading/OnboardingDot";
@@ -53,7 +54,7 @@ export default function OnboardingScreen() {
       <View className="w-full px-4 py-4">
         <RoundButton
           label={OnboardingStrings.button}
-          onPress={() => router.replace("/(auth)/login")}
+          onPress={() => router.replace(ROUTES.LOGIN)}
         />
       </View>
     </SafeAreaView>

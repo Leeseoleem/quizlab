@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 
 // 로그인 가능 여부 체크 함수
-export const checkLoin = async (email: string, password: string) => {
+export const checkLogin = async (email: string, password: string) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,

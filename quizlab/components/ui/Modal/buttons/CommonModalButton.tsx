@@ -17,7 +17,7 @@ export const CommonModalButton = ({
 }: CommonModalButtonProps) => {
   // 버튼 스타일
   const buttonClass = clsx(
-    "w-24 h-12 justify-center items-center rounded-xl",
+    "flex-1 h-[52px] justify-center items-center rounded-xl",
     type === "secondary" ? "bg-white" : "bg-primary",
     type === "secondary" && "border border-gray20",
     type === "disable" && "opacity-60"

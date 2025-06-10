@@ -1,6 +1,6 @@
-export { ModalContainer, ModalContainerProps } from "./ModalContiner.js";
+export { ModalContainer } from "./ModalContiner";
 
 export * from "./headers";
-export { ModalButtonLayout } from "./buttons/ModalButtonLayout.js";
-export { ModalTabBar } from "./modal-tabs/ModalTabBar.js";
-export { ModalTextBox } from "./text-fields/ModalTextBox.js";
+export { ModalButtonLayout } from "./buttons/ModalButtonLayout";
+export { ModalTabBar } from "./modal-tabs/ModalTabBar";
+export { ModalTextBox } from "./text-fields/ModalTextBox";

@@ -2,13 +2,13 @@ import { updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import { fetchCurrentUserInfo } from "../fetchCurrentUserInfo";
 
-export const editUserNickname = async (newNickname: string) => {
+export const editUserNickname = async (nickname: string) => {
   const user = auth.currentUser;
 
   if (user) {
     try {
       await updateProfile(user, {
-        displayName: newNickname,
+        displayName: nickname,
       });
       console.log("✅ 닉네임 변경 성공");
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Redirect } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getOnboardingStatus } from "../constants/onboarding/useOnboarding";
 
 import { ROUTES } from "@/constants/routes";
 import { useAuth } from "@/providers/AuthContext";
@@ -9,11 +9,13 @@ export default function Index() {
   const [hasOnboarded, setHasOnboarded] = useState<boolean | null>(null);
   const { user, loading } = useAuth();
 
+  // 온보딩 여부 체크
   useEffect(() => {
-    (async () => {
-      const value = await AsyncStorage.getItem("hasOnboarded");
-      setHasOnboarded(value === "true");
-    })();
+    const loadStatus = async () => {
+      const status = await getOnboardingStatus();
+      setHasOnboarded(status);
+    };
+    loadStatus();
   }, []);
 
   // 로딩 중이면 대기

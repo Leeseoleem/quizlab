@@ -44,3 +44,8 @@ export const getPasswordErrorMessage = (password: string): string | null => {
   // 모든 조건 통과
   return null;
 };
+
+// 로그인 활성화
+export const isSubmitButtonEnabled = (email: string, password: string) => {
+  return email.trim() !== "" && password.trim() !== "";
+};

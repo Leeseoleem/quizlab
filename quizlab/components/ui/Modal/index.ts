@@ -1,4 +1,4 @@
-export { ModalContainer } from "./ModalContiner.js";
+export { ModalContainer, ModalContainerProps } from "./ModalContiner.js";
 
 export * from "./headers";
 export { ModalButtonLayout } from "./buttons/ModalButtonLayout.js";

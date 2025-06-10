@@ -1,5 +1,10 @@
 import { View } from "react-native";
-import { ModalContainer, CloseModalHeader, ModalTextBox } from "../ui/Modal";
+import {
+  ModalContainer,
+  CloseModalHeader,
+  ModalTextBox,
+  ModalButtonLayout,
+} from "../ui/Modal";
 
 import { MyStrings } from "@/constants/my/strings";
 
@@ -9,6 +14,7 @@ interface EditNicknameModalProps {
   nickname: string;
   onChangeText: (text: string) => void;
   onPressClear: () => void;
+  handleUpdateNickname: () => void;
 }
 
 export const EditNicknameModal = ({
@@ -17,15 +23,16 @@ export const EditNicknameModal = ({
   nickname,
   onChangeText,
   onPressClear,
+  handleUpdateNickname,
 }: EditNicknameModalProps) => {
   return (
     <ModalContainer visible={isEditModalVisible} onClose={closeEditModal}>
-      <View className="w-full gap-6">
+      <View className="w-full gap-8">
         <CloseModalHeader
           label={MyStrings.editLabel}
           onPress={closeEditModal}
         />
-        <View>
+        <View className="w-full px-6">
           <ModalTextBox
             type="default"
             label={MyStrings.editLabel}
@@ -35,6 +42,10 @@ export const EditNicknameModal = ({
             onPressClear={onPressClear}
           />
         </View>
+        <ModalButtonLayout
+          onPressCancle={closeEditModal}
+          onPressConfirm={handleUpdateNickname}
+        />
       </View>
     </ModalContainer>
   );

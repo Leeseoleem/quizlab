@@ -10,8 +10,8 @@ interface FromProps {
   label: string;
   value: string;
   onChangeText: (text: string) => void;
-  error: boolean;
-  helperText: string | null;
+  error?: boolean;
+  helperText?: string | null;
   helperColor?: string;
   keyboardType?: TextInputProps["keyboardType"];
 }

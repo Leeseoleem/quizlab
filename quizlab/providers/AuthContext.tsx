@@ -24,6 +24,13 @@ export default function AuthProvider({
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      /* 디버깅 로그
+      console.log(
+        "Auth state changed:",
+        firebaseUser ? "User logged in" : "User logged out"
+      );
+      console.log("User:", firebaseUser); */
+
       setUser(firebaseUser);
       setLoading(false);
     });

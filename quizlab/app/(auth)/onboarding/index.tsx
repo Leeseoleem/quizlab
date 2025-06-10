@@ -10,12 +10,26 @@ import {
   onboardingTitleStyle,
   onboardingSubtitleStyle,
 } from "@/constants/onboarding";
+import { ROUTES } from "@/constants/routes";
 
-import { OnboardingImage } from "@/components/onboading/OnboardingImage";
-import { OnboardingDot } from "@/components/onboading/OnboardingDot";
+import { setOnboardingCompleted } from "@/constants/onboarding/useOnboarding";
+
+import { OnboardingImage } from "@/components/auth/onboading/OnboardingImage";
+import { OnboardingDot } from "@/components/auth/onboading/OnboardingDot";
 import { RoundButton } from "@/components/ui/common/buttons/RoundButton";
 
 export default function OnboardingScreen() {
+  const handleOnboading = async () => {
+    try {
+      // 온보딩 완료 상태 저장
+      await setOnboardingCompleted();
+
+      // 로그인 화면으로 이동
+      router.replace(ROUTES.LOGIN);
+    } catch (error) {
+      console.error("온보딩 완료 처리 중 오류:", error);
+    }
+  };
   return (
     <SafeAreaView className="flex-1">
       <Onboarding
@@ -53,7 +67,7 @@ export default function OnboardingScreen() {
       <View className="w-full px-4 py-4">
         <RoundButton
           label={OnboardingStrings.button}
-          onPress={() => router.replace("/(auth)/login")}
+          onPress={handleOnboading}
         />
       </View>
     </SafeAreaView>

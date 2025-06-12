@@ -4,9 +4,9 @@ import "react-native-reanimated";
 import "./global.css";
 
 import AuthProvider from "@/providers/AuthContext";
-import AuthGate from "@/providers/AuthGate";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
+import { Slot } from "expo-router";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -21,10 +21,10 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
         <AuthProvider>
-          <AuthGate />
+          <Slot />
           <StatusBar style="auto" />
         </AuthProvider>
       </PaperProvider>

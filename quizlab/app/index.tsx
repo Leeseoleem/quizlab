@@ -14,9 +14,11 @@ export default function Index() {
     const loadStatus = async () => {
       const status = await getOnboardingStatus();
       setHasOnboarded(status);
+
+      console.log("온보딩", hasOnboarded);
     };
     loadStatus();
-  }, []);
+  }, [hasOnboarded]);
 
   // 로딩 중이면 대기
   if (hasOnboarded === null || loading) return null;

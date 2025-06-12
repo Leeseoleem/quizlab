@@ -2,7 +2,7 @@ import { auth } from "../firebase/config";
 import { router } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { showToast } from "./toastMessage";
-import { AuthErrorMessages } from "@/constants/auth/authErrorMessages";
+import { AuthMessages } from "@/constants/auth/authMessages";
 
 export const fetchCurrentUserUid = async () => {
   const user = auth.currentUser;
@@ -29,7 +29,7 @@ export const fetchCurrentUserInfo = async () => {
 export const getCurrentUserOrRedirect = () => {
   const user = auth.currentUser;
   if (!user) {
-    showToast(AuthErrorMessages.noUser);
+    showToast(AuthMessages.noUser);
     router.replace(ROUTES.LOGIN); // 또는 ONBOARDING 등
     return null;
   }

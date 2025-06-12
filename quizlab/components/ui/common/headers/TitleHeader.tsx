@@ -9,8 +9,8 @@ type TitleHeaderType = "default" | "searh" | "timer";
 
 interface TitleHeaderProps {
   type?: TitleHeaderType;
-  label?: string;
-  onPress: () => void;
+  label: string;
+  onPress?: () => void;
 
   // default 타입
   icon?: ReactElement;
@@ -30,7 +30,7 @@ export const TitleHeader = ({
   timeText,
 }: TitleHeaderProps) => {
   return (
-    <View className="w-full h-16 px-4 justify-center">
+    <View className="w-full h-16 px-4 justify-center bg-white">
       <TouchableOpacity
         activeOpacity={0.8}
         className="flex-row justify-between items-center"

@@ -1,7 +1,7 @@
 export const ROUTES = {
   ROOT: "/",
   TABS: "/(tabs)",
-  AUTH: "'/(auth)",
+  AUTH: "/(auth)",
   HOME: "/(tabs)/home",
   PROBLEMS: "/(tabs)/problems",
   MYPAGE: "/(tabs)/mypage",

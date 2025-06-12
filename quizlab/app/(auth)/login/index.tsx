@@ -29,7 +29,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 " edges={["top"]}>
+    <SafeAreaView className="flex-1" edges={["top"]}>
       <View className="justify-center items-center mt-[60px] gap-[60px]">
         <LogoImage />
         <View className="w-full px-6 gap-4">

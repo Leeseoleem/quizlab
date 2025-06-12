@@ -14,6 +14,17 @@ export default function Index() {
     const loadStatus = async () => {
       const status = await getOnboardingStatus();
       setHasOnboarded(status);
+<<<<<<< HEAD
+
+      console.log("온보딩", hasOnboarded);
+    };
+    loadStatus();
+  }, [hasOnboarded]);
+
+  // 로딩 중이면 대기
+  if (hasOnboarded === null || loading) return null;
+
+=======
     };
     loadStatus();
   }, []);
@@ -21,6 +32,7 @@ export default function Index() {
   // 로딩 중이면 대기
   if (hasOnboarded === null || loading) return null;
 
+>>>>>>> 85ba71dc72c599a18faf9a16b359b29f7c9487a3
   // 온보딩 안 했으면 온보딩으로
   if (!hasOnboarded) {
     return <Redirect href={ROUTES.ONBOARDING} />;

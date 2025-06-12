@@ -6,12 +6,15 @@ import { GrayColors } from "@/constants/Colors";
 export const AccountList = ({
   title,
   color = "text-black",
+  onPress,
 }: {
   title: string;
   color?: string;
+  onPress: () => void;
 }) => {
   return (
     <TouchableOpacity
+      onPress={onPress}
       activeOpacity={0.8}
       className="flex-row w-full h-[60px] justify-between items-center px-6"
     >

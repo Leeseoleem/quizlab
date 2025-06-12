@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { CommonModalButton } from "./CommonModalButton";
 
 interface ModalButtonLayoutProps {
+  disable?: boolean;
   cancleText?: string;
   onPressCancle: () => void;
   confirmText?: string;
@@ -9,6 +10,7 @@ interface ModalButtonLayoutProps {
 }
 
 export const ModalButtonLayout = ({
+  disable = false,
   cancleText = "취소",
   onPressCancle,
   confirmText = "확인",
@@ -21,7 +23,11 @@ export const ModalButtonLayout = ({
         label={cancleText}
         onPress={onPressCancle}
       />
-      <CommonModalButton label={confirmText} onPress={onPressConfirm} />
+      <CommonModalButton
+        type={disable ? "disable" : "primary"}
+        label={confirmText}
+        onPress={onPressConfirm}
+      />
     </View>
   );
 };

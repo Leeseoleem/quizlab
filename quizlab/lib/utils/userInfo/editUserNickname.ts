@@ -10,7 +10,7 @@ export const editUserNickname = async (nickname: string) => {
       await updateProfile(user, {
         displayName: nickname,
       });
-      console.log("✅ 닉네임 변경 성공");
+      console.log("닉네임 변경 성공");
 
       const updatedUser = await fetchCurrentUserInfo();
       return updatedUser?.nickname;

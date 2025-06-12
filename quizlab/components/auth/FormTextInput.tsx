@@ -14,6 +14,7 @@ interface FromProps {
   helperText?: string | null;
   helperColor?: string;
   keyboardType?: TextInputProps["keyboardType"];
+  maxLength: number;
 }
 
 export const FormTextInput = ({
@@ -25,6 +26,7 @@ export const FormTextInput = ({
   helperText,
   helperColor = "text-danger",
   keyboardType = "default",
+  maxLength,
 }: FromProps) => {
   return (
     <View className="w-full gap-2">
@@ -35,6 +37,7 @@ export const FormTextInput = ({
         onChangeText={onChangeText}
         mode="flat"
         keyboardType={keyboardType}
+        maxLength={maxLength}
         placeholderTextColor={GrayColors.gray30} // placeholder 색상
         underlineColor={MainColors.primary} // 밑줄 색상
         activeUnderlineColor={MainColors.primary}

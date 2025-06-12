@@ -17,5 +17,9 @@ export const MyStrings = {
       logout: "로그아웃",
       deleteAccout: "탈퇴하기",
     },
+    toast: {
+      logout: "로그아웃 되었습니다",
+      error: "로그아웃에 실패하였습니다",
+    },
   },
 };

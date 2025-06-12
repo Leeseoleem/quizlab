@@ -57,16 +57,17 @@ export const getNicknameErrorMessage = (nickname: string): string | null => {
   const trimmed = nickname.trim();
   const { MIN_LENGTH, MAX_LENGTH, REGEX } = NICKNAME_VALIDATION;
 
+  // 1. 최소 길이 미충족
   if (trimmed.length < MIN_LENGTH) {
-    return `닉네임은 최소 ${MIN_LENGTH}자 이상이어야 해요.`;
+    return NicknameMessages.tooShort(MIN_LENGTH);
   }
-
+  // 2. 최대 길이 초과
   if (trimmed.length > MAX_LENGTH) {
-    return `닉네임은 최대 ${MAX_LENGTH}자까지 입력할 수 있어요.`;
+    return NicknameMessages.tooLong(MAX_LENGTH);
   }
-
+  // 3. 조건 미충족
   if (!REGEX.test(trimmed)) {
-    return "닉네임에는 한글, 영문, 숫자만 사용할 수 있어요.";
+    return NicknameMessages.invalidFormat;
   }
 
   return null;

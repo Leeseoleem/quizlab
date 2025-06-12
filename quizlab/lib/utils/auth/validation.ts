@@ -3,6 +3,8 @@ import {
   EmailMessages,
   PASSWORD_VALIDATION,
   PasswordMessages,
+  NICKNAME_VALIDATION,
+  NicknameMessages,
 } from "@/constants/auth/validationStrings";
 
 // 이메일 유효성 검사 함수
@@ -48,4 +50,24 @@ export const getPasswordErrorMessage = (password: string): string | null => {
 // 로그인 활성화
 export const isSubmitButtonEnabled = (email: string, password: string) => {
   return email.trim() !== "" && password.trim() !== "";
+};
+
+// 닉네임 유효성 검사
+export const getNicknameErrorMessage = (nickname: string): string | null => {
+  const trimmed = nickname.trim();
+  const { MIN_LENGTH, MAX_LENGTH, REGEX } = NICKNAME_VALIDATION;
+
+  if (trimmed.length < MIN_LENGTH) {
+    return `닉네임은 최소 ${MIN_LENGTH}자 이상이어야 해요.`;
+  }
+
+  if (trimmed.length > MAX_LENGTH) {
+    return `닉네임은 최대 ${MAX_LENGTH}자까지 입력할 수 있어요.`;
+  }
+
+  if (!REGEX.test(trimmed)) {
+    return "닉네임에는 한글, 영문, 숫자만 사용할 수 있어요.";
+  }
+
+  return null;
 };

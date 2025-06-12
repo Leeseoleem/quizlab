@@ -19,3 +19,15 @@ export const PasswordMessages = {
   tooLong: (max: number) => `비밀번호는 최대 ${max}자까지 입력할 수 있어요.`,
   invalidFormat: "비밀번호는 영문과 숫자를 모두 포함해야 해요.",
 };
+
+export const NICKNAME_VALIDATION = {
+  MIN_LENGTH: 2,
+  MAX_LENGTH: 12,
+  REGEX: /^[가-힣a-zA-Z0-9]+$/,
+};
+
+export const NicknameMessages = {
+  tooShort: (min: number) => `닉네임은 최소 ${min}자 이상이어야 해요.`,
+  tooLong: (max: number) => `닉네임은 최대 ${max}자까지 입력할 수 있어요.`,
+  invalidFormat: "닉네임에는 한글, 영문, 숫자만 사용할 수 있어요.",
+};

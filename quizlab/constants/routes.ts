@@ -9,4 +9,5 @@ export const ROUTES = {
   LOGIN: "/(auth)/login",
   SIGNUP: "/(auth)/signup",
   NICKNAME: "/(auth)/signup/nickname",
+  COMPELETE: "/(auth)/signup/complete",
 } as const;

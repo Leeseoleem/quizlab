@@ -1,4 +1,8 @@
-import { signOut, deleteUser } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signOut,
+  deleteUser,
+} from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import { router } from "expo-router";
 
@@ -7,6 +11,22 @@ import { showToast } from "../toastMessage";
 import { AuthMessages } from "@/constants/auth/authMessages";
 import { getCurrentUserOrRedirect } from "../fetchCurrentUserInfo";
 
+// 회원가입 함수
+export const handleSignup = async (email: string, password: string) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return { success: true, user: userCredential.user };
+  } catch (error: any) {
+    console.error("Signup error:", error.code);
+    return { success: false, error: error.code };
+  }
+};
+
+// 로그아웃 함수
 export const handleLogout = async () => {
   const user = getCurrentUserOrRedirect();
   if (!user) return;
@@ -21,6 +41,7 @@ export const handleLogout = async () => {
   }
 };
 
+// 회원탈퇴 함수
 export const handleDeleteAccount = async () => {
   const user = getCurrentUserOrRedirect();
   if (!user) return;

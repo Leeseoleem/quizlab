@@ -23,7 +23,7 @@ export const PasswordMessages = {
 export const NICKNAME_VALIDATION = {
   MIN_LENGTH: 2,
   MAX_LENGTH: 12,
-  REGEX: /^[가-힣a-zA-Z0-9]+$/,
+  REGEX: /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/,
 };
 
 export const NicknameMessages = {

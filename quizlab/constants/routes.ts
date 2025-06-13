@@ -8,4 +8,6 @@ export const ROUTES = {
   ONBOARDING: "/(auth)/onboarding",
   LOGIN: "/(auth)/login",
   SIGNUP: "/(auth)/signup",
+  NICKNAME: "/(auth)/signup/nickname",
+  COMPELETE: "/(auth)/signup/complete",
 } as const;

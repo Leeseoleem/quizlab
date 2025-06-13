@@ -6,6 +6,10 @@ import { router } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { LoginStrings } from "@/constants/auth/login/strings";
 import { isSubmitButtonEnabled } from "@/lib/utils/auth/validation";
+import {
+  EMAIL_VALIDATION,
+  PASSWORD_VALIDATION,
+} from "@/constants/auth/validationStrings";
 
 import { LogoImage } from "@/components/auth/LogoImage";
 import { FormTextInput } from "@/components/auth/FormTextInput";
@@ -38,12 +42,15 @@ export default function LoginScreen() {
             value={emailText}
             onChangeText={setEmailText}
             placeholder={LoginStrings.emailPlaceholder}
+            maxLength={EMAIL_VALIDATION.MAX_LENGTH}
           />
           <FormTextInput
             label={LoginStrings.passwordLabel}
             value={passwordText}
             onChangeText={setPasswordText}
             placeholder={LoginStrings.passwordPlaceholder}
+            maxLength={PASSWORD_VALIDATION.MAX_LENGTH}
+            isPassword={true}
           />
         </View>
         <View className="w-full px-4 gap-4">

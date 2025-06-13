@@ -18,9 +18,18 @@ export const SignupStrings = {
   passwordPlaceholder: "영문, 숫자 포함 8자 이상",
   confirmPasswordLabel: "비밀번호 확인",
   confirmPasswordPlaceholder: "비밀번호를 다시 입력해주세요",
+  confirmPasswordError: "비밀번호가 일치하지 않아요.",
   nextButton: "다음",
 
   nicknameLabel: "닉네임",
   nicknamePlaceholder: "한글, 영문, 숫자 2~12자",
   confirmButton: "완료",
+
+  loginButtom: "로그인하러 가기",
+
+  toast: {
+    emailError: "이미 가입된 이메일이에요",
+    signupError: "회원가입에 실패했어요",
+    nickError: "닉네임 설정에 실패했어요",
+  },
 };

@@ -8,4 +8,5 @@ export const ROUTES = {
   ONBOARDING: "/(auth)/onboarding",
   LOGIN: "/(auth)/login",
   SIGNUP: "/(auth)/signup",
+  NICKNAME: "/(auth)/signup/nickname",
 } as const;

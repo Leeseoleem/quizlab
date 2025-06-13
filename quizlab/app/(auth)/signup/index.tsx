@@ -12,7 +12,7 @@ import {
   EMAIL_VALIDATION,
   PASSWORD_VALIDATION,
 } from "@/constants/auth/validationStrings";
-import { handleSignup } from "@/lib/utils/auth/handleAccount";
+import { handleLogin, handleSignup } from "@/lib/utils/auth/handleAccount";
 
 import { BackHeader } from "@/components/ui/common/headers/BackHeader";
 import { PageHeader } from "@/components/ui/common/PageHeader";
@@ -46,6 +46,11 @@ export default function SignUpScreen() {
   const handleSubmit = async () => {
     const result = await handleSignup(email, password);
     if (result.success) {
+      await handleLogin({
+        email,
+        password,
+        showMessage: false,
+      });
       router.push(ROUTES.NICKNAME);
     } else {
       if (result.error === "auth/email-already-in-use") {

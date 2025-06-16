@@ -1,49 +1,53 @@
+import { supabase } from "@/lib/supabase";
+import { Session, User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
-import { User, onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase/config";
 
 interface AuthContextType {
+  session: Session | null;
   user: User | null;
-  loading: boolean;
+  isLoading: boolean;
 }
 
-// context 생성
 const AuthContext = createContext<AuthContextType>({
+  session: null,
   user: null,
-  loading: true,
+  isLoading: true,
 });
 
-// Provider 컴포넌트 정의
-export default function AuthProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      /* 디버깅 로그
-      console.log(
-        "Auth state changed:",
-        firebaseUser ? "User logged in" : "User logged out"
-      );
-      console.log("User:", firebaseUser); */
-
-      setUser(firebaseUser);
-      setLoading(false);
+    // 앱 시작 시 세션 가져오기
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setIsLoading(false);
     });
 
-    return () => unsubscribe();
+    // 로그인/로그아웃/갱신 감지
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider
+      value={{
+        session,
+        user: session?.user ?? null,
+        isLoading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-// 사용자 정의 훅
 export const useAuth = () => useContext(AuthContext);

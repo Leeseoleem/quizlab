@@ -1,12 +1,12 @@
-import { Slot, Redirect, usePathname } from "expo-router";
-import { useAuth } from "./AuthContext";
 import { ROUTES } from "@/constants/routes";
+import { Redirect, Slot, usePathname } from "expo-router";
+import { useAuth } from "./AuthContext";
 
 export default function AuthGate() {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
   const pathname = usePathname();
 
-  if (loading) return null;
+  if (isLoading) return null;
 
   const isPublicRoute = (path: string) => path.startsWith("/(auth)");
 

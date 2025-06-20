@@ -41,6 +41,7 @@ export const completeSignup = async () => {
   if (signOutError) throw signOutError;
 };
 
+// 닉네임 수정하기
 export const updateNickname = async (nickname: string) => {
   const {
     data: { user },
@@ -55,4 +56,25 @@ export const updateNickname = async (nickname: string) => {
     .eq("user_id", user.id);
 
   if (error) throw error;
+};
+
+// 닉네임 불러오기
+export const getNickname = async (): Promise<string> => {
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) throw new Error("유저 정보를 불러올 수 없습니다");
+
+  const { data, error } = await supabase
+    .from("user_info")
+    .select("nickname")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (!data || !data.nickname) throw new Error("닉네임이 존재하지 않습니다");
+
+  return data.nickname;
 };

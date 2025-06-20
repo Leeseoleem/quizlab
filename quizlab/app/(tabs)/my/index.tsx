@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 
 import { fetchCurrentUserInfo } from "@/lib/utils/fetchCurrentUserInfo";
-import { updateNickname } from "@/lib/utils/userInfo/userInfo";
+import { updateNickname, getNickname } from "@/lib/utils/userInfo/userInfo";
 import { getNicknameErrorMessage } from "@/lib/utils/auth/validation";
 import { MyStrings } from "@/constants/my/strings";
 import { showToast } from "@/lib/utils/toastMessage";
@@ -18,29 +18,23 @@ import { UserInfoSection } from "@/components/my/UserInfoSection";
 import { AccountSection } from "@/components/my/AccountSection";
 
 export default function MyScreen() {
-  const [userInfo, setUserInfo] = useState<{
-    uid: string;
-    email: string | null;
-    nickname: string | null;
-    photoURL: string | null;
-  } | null>(null);
   const [nickname, setNickname] = useState<string>("");
 
-  const fetchUser = async () => {
-    const user = await fetchCurrentUserInfo();
-    setUserInfo(user);
-
-    // editNickname도 동기화
-    if (user?.nickname) {
-      setNickname(user.nickname);
+  const fetchNickname = async () => {
+    try {
+      const name = await getNickname();
+      setNickname(name);
+    } catch (e) {
+      setNickname("게스트"); // 또는 에러 핸들링 (e.g. 게스트 처리)
     }
   };
 
   useFocusEffect(
     useCallback(() => {
-      fetchUser();
+      fetchNickname();
     }, [])
   );
+
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
 
   // 닉네임 유효성 검사 추가하기
@@ -55,7 +49,7 @@ export default function MyScreen() {
 
     try {
       await updateNickname(nickname);
-      fetchUser();
+      fetchNickname();
       setIsEditModalVisible(false);
       showToast(MyStrings.toast.nicknameUpdated);
     } catch (error: any) {
@@ -65,7 +59,7 @@ export default function MyScreen() {
   };
 
   useEffect(() => {
-    fetchUser();
+    fetchNickname();
   }, [isEditModalVisible]);
 
   const handleLogout = async () => {
@@ -99,7 +93,7 @@ export default function MyScreen() {
       />
       <TitleHeader type="default" label={MyStrings.header.title} />
       <UserInfoSection
-        userName={userInfo?.nickname ?? ""}
+        userName={nickname}
         onPress={() => setIsEditModalVisible(true)}
       />
       <View className="px-4">

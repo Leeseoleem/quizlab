@@ -29,7 +29,7 @@ export const SignupStrings = {
 
   toast: {
     emailError: "이미 가입된 이메일이에요",
-    signupError: "회원가입에 실패했어요",
+    signupError: "회원가입에 실패했어요\n다시 시도해주세요",
     nickError: "닉네임 설정에 실패했어요",
   },
 };

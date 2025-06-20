@@ -12,7 +12,7 @@ import {
   EMAIL_VALIDATION,
   PASSWORD_VALIDATION,
 } from "@/constants/auth/validationStrings";
-import { handleLogin, handleSignup } from "@/lib/utils/auth/handleAccount";
+import { signUp } from "@/lib/utils/auth/auth";
 
 import { BackHeader } from "@/components/ui/common/headers/BackHeader";
 import { PageHeader } from "@/components/ui/common/PageHeader";
@@ -44,18 +44,12 @@ export default function SignUpScreen() {
   };
 
   const handleSubmit = async () => {
-    const result = await handleSignup(email, password);
-    if (result.success) {
-      await handleLogin({
-        email,
-        password,
-        showMessage: false,
-      });
+    try {
+      await signUp(email, password); // 성공 시 자동 로그인됨
       router.push(ROUTES.NICKNAME);
-    } else {
-      if (result.error === "auth/email-already-in-use") {
-        showToast(SignupStrings.toast.emailError);
-      } else showToast(SignupStrings.toast.signupError);
+    } catch (error: any) {
+      showToast(SignupStrings.toast.signupError);
+      console.log("회원가입 실패", error.message);
     }
   };
 

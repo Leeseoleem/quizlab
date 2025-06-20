@@ -1,16 +1,13 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, BackHandler } from "react-native";
-import { router, useFocusEffect } from "expo-router";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase/config";
+import { View } from "react-native";
+import { router } from "expo-router";
 
 import { showToast } from "@/lib/utils/toastMessage";
 import { SignupStrings } from "@/constants/auth/signup/strings";
 import { NICKNAME_VALIDATION } from "@/constants/auth/validationStrings";
 import { getNicknameErrorMessage } from "@/lib/utils/auth/validation";
-import { editUserNickname } from "@/lib/utils/userInfo/editUserNickname";
-import { attemptDeleteOnly } from "@/lib/utils/auth/handleAccount";
+import { insertUserInfo } from "@/lib/utils/userInfo/userInfo";
 
 import { BackHeader } from "@/components/ui/common/headers/BackHeader";
 import { PageHeader } from "@/components/ui/common/PageHeader";
@@ -25,40 +22,21 @@ export default function SetNicknameScreen() {
     return nickname.trim() !== "" && getNicknameErrorMessage(nickname) === null;
   };
 
-  const handleUpdatNickname = async () => {
+  const handleSubmit = async () => {
     try {
-      const updatedUser = await editUserNickname(nickname);
-      if (updatedUser) {
-        router.replace(ROUTES.COMPELETE);
-        await signOut(auth);
-      }
-    } catch (error) {
+      await insertUserInfo(nickname);
+      router.replace(ROUTES.COMPLETE);
+    } catch (error: any) {
       showToast(SignupStrings.toast.nickError);
+      console.log("오류", error.message || "유저 정보 저장 실패");
     }
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        attemptDeleteOnly();
-        return false;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        "hardwareBackPress",
-        onBackPress
-      );
-
-      return () => subscription.remove(); // cleanup
-    }, [])
-  );
 
   return (
     <SafeAreaView className="flex-1">
       <BackHeader
         label={SignupStrings.header}
         onPress={() => {
-          attemptDeleteOnly();
           router.back();
         }}
       />
@@ -79,7 +57,7 @@ export default function SetNicknameScreen() {
         <RoundButton
           type={isStepTwoFormValid() ? "default" : "disable"}
           label={SignupStrings.confirmButton}
-          onPress={handleUpdatNickname}
+          onPress={handleSubmit}
         />
       </View>
     </SafeAreaView>

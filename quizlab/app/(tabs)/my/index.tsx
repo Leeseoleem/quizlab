@@ -1,48 +1,39 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect, useCallback } from "react";
 import { View } from "react-native";
-import { useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 
-import { fetchCurrentUserInfo } from "@/lib/utils/fetchCurrentUserInfo";
-import { editUserNickname } from "@/lib/utils/userInfo/editUserNickname";
+import { updateNickname, getNickname } from "@/lib/utils/userInfo/userInfo";
 import { getNicknameErrorMessage } from "@/lib/utils/auth/validation";
 import { MyStrings } from "@/constants/my/strings";
 import { showToast } from "@/lib/utils/toastMessage";
-import {
-  handleLogout,
-  handleDeleteAccount,
-} from "../../../lib/utils/auth/handleAccount";
+import { signOut } from "@/lib/utils/auth/auth";
 
 import { TitleHeader } from "@/components/ui/common/headers/TitleHeader";
 import { EditNicknameModal } from "@/components/my/EditNicknameModal";
 import { DeleteAccountModal } from "@/components/my/DeleteAccountModal";
 import { UserInfoSection } from "@/components/my/UserInfoSection";
 import { AccountSection } from "@/components/my/AccountSection";
+import { ROUTES } from "@/constants/routes";
 
 export default function MyScreen() {
-  const [userInfo, setUserInfo] = useState<{
-    uid: string;
-    email: string | null;
-    nickname: string | null;
-    photoURL: string | null;
-  } | null>(null);
   const [nickname, setNickname] = useState<string>("");
 
-  const fetchUser = async () => {
-    const user = await fetchCurrentUserInfo();
-    setUserInfo(user);
-
-    // editNickname도 동기화
-    if (user?.nickname) {
-      setNickname(user.nickname);
+  const fetchNickname = async () => {
+    try {
+      const name = await getNickname();
+      setNickname(name);
+    } catch (e) {
+      setNickname("게스트"); // 또는 에러 핸들링 (e.g. 게스트 처리)
     }
   };
 
   useFocusEffect(
     useCallback(() => {
-      fetchUser();
+      fetchNickname();
     }, [])
   );
+
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
 
   // 닉네임 유효성 검사 추가하기
@@ -56,20 +47,30 @@ export default function MyScreen() {
     }
 
     try {
-      const updatedUser = await editUserNickname(nickname);
-      if (updatedUser) {
-        fetchUser();
-      }
+      await updateNickname(nickname);
+      fetchNickname();
       setIsEditModalVisible(false);
       showToast(MyStrings.toast.nicknameUpdated);
-    } catch (error) {
+    } catch (error: any) {
       showToast(MyStrings.toast.nicknameUpdateFailed);
+      console.log("오류", error.message || "닉네임 수정 실패");
     }
   };
 
   useEffect(() => {
-    fetchUser();
+    fetchNickname();
   }, [isEditModalVisible]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      showToast(MyStrings.section.toast.logout);
+      router.replace(ROUTES.LOGIN);
+    } catch (error: any) {
+      showToast(MyStrings.section.toast.error);
+      console.log(error.message);
+    }
+  };
 
   const [iseDeleteModalVisible, setIseDeleteModalVisible] =
     useState<boolean>(false);
@@ -88,11 +89,13 @@ export default function MyScreen() {
       <DeleteAccountModal
         visible={iseDeleteModalVisible}
         onClose={() => setIseDeleteModalVisible(false)}
-        onPressConfirm={handleDeleteAccount}
+        onPressConfirm={() => {
+          console.log("회원 탈퇴 로직 추가 필요");
+        }}
       />
       <TitleHeader type="default" label={MyStrings.header.title} />
       <UserInfoSection
-        userName={userInfo?.nickname ?? ""}
+        userName={nickname}
         onPress={() => setIsEditModalVisible(true)}
       />
       <View className="px-4">

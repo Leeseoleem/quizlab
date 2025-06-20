@@ -1,14 +1,13 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, BackHandler } from "react-native";
-import { router, useFocusEffect } from "expo-router";
+import { View } from "react-native";
+import { router } from "expo-router";
 
 import { showToast } from "@/lib/utils/toastMessage";
 import { SignupStrings } from "@/constants/auth/signup/strings";
 import { NICKNAME_VALIDATION } from "@/constants/auth/validationStrings";
 import { getNicknameErrorMessage } from "@/lib/utils/auth/validation";
 import { insertUserInfo } from "@/lib/utils/userInfo/userInfo";
-import { attemptDeleteOnly } from "@/lib/utils/auth/handleAccount";
 
 import { BackHeader } from "@/components/ui/common/headers/BackHeader";
 import { PageHeader } from "@/components/ui/common/PageHeader";
@@ -33,28 +32,11 @@ export default function SetNicknameScreen() {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        attemptDeleteOnly();
-        return false;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        "hardwareBackPress",
-        onBackPress
-      );
-
-      return () => subscription.remove(); // cleanup
-    }, [])
-  );
-
   return (
     <SafeAreaView className="flex-1">
       <BackHeader
         label={SignupStrings.header}
         onPress={() => {
-          attemptDeleteOnly();
           router.back();
         }}
       />

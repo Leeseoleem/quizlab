@@ -4,14 +4,12 @@ import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 
 import { fetchCurrentUserInfo } from "@/lib/utils/fetchCurrentUserInfo";
-import { editUserNickname } from "@/lib/utils/userInfo/editUserNickname";
+import { updateNickname } from "@/lib/utils/userInfo/userInfo";
 import { getNicknameErrorMessage } from "@/lib/utils/auth/validation";
 import { MyStrings } from "@/constants/my/strings";
 import { showToast } from "@/lib/utils/toastMessage";
-import {
-  handleLogout,
-  handleDeleteAccount,
-} from "../../../lib/utils/auth/handleAccount";
+import { handleDeleteAccount } from "../../../lib/utils/auth/handleAccount";
+import { signOut } from "@/lib/utils/auth/auth";
 
 import { TitleHeader } from "@/components/ui/common/headers/TitleHeader";
 import { EditNicknameModal } from "@/components/my/EditNicknameModal";
@@ -56,20 +54,29 @@ export default function MyScreen() {
     }
 
     try {
-      const updatedUser = await editUserNickname(nickname);
-      if (updatedUser) {
-        fetchUser();
-      }
+      await updateNickname(nickname);
+      fetchUser();
       setIsEditModalVisible(false);
       showToast(MyStrings.toast.nicknameUpdated);
-    } catch (error) {
+    } catch (error: any) {
       showToast(MyStrings.toast.nicknameUpdateFailed);
+      console.log("오류", error.message || "닉네임 수정 실패");
     }
   };
 
   useEffect(() => {
     fetchUser();
   }, [isEditModalVisible]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      showToast(MyStrings.section.toast.logout);
+    } catch (error: any) {
+      showToast(MyStrings.section.toast.error);
+      console.log(error.message);
+    }
+  };
 
   const [iseDeleteModalVisible, setIseDeleteModalVisible] =
     useState<boolean>(false);

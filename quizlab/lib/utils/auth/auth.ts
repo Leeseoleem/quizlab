@@ -7,6 +7,11 @@ export const signUp = async (email: string, password: string) => {
   return data;
 };
 
+// 로그인 활성화
+export const isSubmitButtonEnabled = (email: string, password: string) => {
+  return email.trim() !== "" && password.trim() !== "";
+};
+
 // 로그인
 export const signIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({

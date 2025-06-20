@@ -2,14 +2,12 @@ import { useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, BackHandler } from "react-native";
 import { router, useFocusEffect } from "expo-router";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase/config";
 
 import { showToast } from "@/lib/utils/toastMessage";
 import { SignupStrings } from "@/constants/auth/signup/strings";
 import { NICKNAME_VALIDATION } from "@/constants/auth/validationStrings";
 import { getNicknameErrorMessage } from "@/lib/utils/auth/validation";
-import { editUserNickname } from "@/lib/utils/userInfo/editUserNickname";
+import { insertUserInfo } from "@/lib/utils/userInfo/userInfo";
 import { attemptDeleteOnly } from "@/lib/utils/auth/handleAccount";
 
 import { BackHeader } from "@/components/ui/common/headers/BackHeader";
@@ -25,15 +23,13 @@ export default function SetNicknameScreen() {
     return nickname.trim() !== "" && getNicknameErrorMessage(nickname) === null;
   };
 
-  const handleUpdatNickname = async () => {
+  const handleSubmit = async () => {
     try {
-      const updatedUser = await editUserNickname(nickname);
-      if (updatedUser) {
-        router.replace(ROUTES.COMPELETE);
-        await signOut(auth);
-      }
-    } catch (error) {
+      await insertUserInfo(nickname);
+      router.replace(ROUTES.COMPLETE);
+    } catch (error: any) {
       showToast(SignupStrings.toast.nickError);
+      console.log("오류", error.message || "유저 정보 저장 실패");
     }
   };
 
@@ -79,7 +75,7 @@ export default function SetNicknameScreen() {
         <RoundButton
           type={isStepTwoFormValid() ? "default" : "disable"}
           label={SignupStrings.confirmButton}
-          onPress={handleUpdatNickname}
+          onPress={handleSubmit}
         />
       </View>
     </SafeAreaView>

@@ -9,7 +9,7 @@ export function getInitialRedirectRoute({
   user: any;
   userInfo: { nickname?: string; is_complete?: boolean } | null;
 }) {
-  console.log("정보: ", userInfo?.nickname);
+  console.log("🚩 getInitialRedirectRoute 호출");
   if (!isOnboarded) return ROUTES.ONBOARDING;
   if (!user) return ROUTES.LOGIN;
 

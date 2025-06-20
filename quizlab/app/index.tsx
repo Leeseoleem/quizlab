@@ -14,12 +14,9 @@ export default function Index() {
     getOnboardingStatus().then(setHasOnboarded);
   }, []);
 
-  // 아직 로딩 중이면 아무 것도 렌더하지 않음
-  if (hasOnboarded === null || isLoading) return null;
+  const isAppLoading = hasOnboarded === null || isLoading;
 
-  if (!userInfo) return null;
-
-  console.log("인덱스", userInfo);
+  if (isAppLoading) return null;
 
   // 모든 상태가 준비된 후 리다이렉트 경로 결정
   const redirectRoute = getInitialRedirectRoute({
@@ -27,18 +24,6 @@ export default function Index() {
     user,
     userInfo,
   });
-
-  console.log("▶️ user:", user);
-  console.log("▶️ userInfo:", userInfo);
-  console.log("▶️ isLoading:", isLoading);
-  console.log(
-    "▶️ redirect:",
-    getInitialRedirectRoute({
-      isOnboarded: hasOnboarded,
-      user,
-      userInfo,
-    })
-  );
 
   // 리다이렉트 경로로 이동
   return <Redirect href={redirectRoute} />;

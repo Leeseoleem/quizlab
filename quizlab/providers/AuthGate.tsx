@@ -1,3 +1,4 @@
+/* 라우팅 오류로 인한 폐기
 import { ROUTES } from "@/constants/routes";
 import { Redirect, Slot, usePathname } from "expo-router";
 import { useAuth } from "./AuthContext";
@@ -24,3 +25,4 @@ export default function AuthGate() {
 
   return <Slot />;
 }
+*/

@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "./global.css";
 
-import AuthProvider from "@/providers/AuthContext";
+import { AuthProvider } from "@/providers/AuthContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import { Slot } from "expo-router";

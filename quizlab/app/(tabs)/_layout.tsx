@@ -5,6 +5,10 @@ import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { BaseColors, Gray } from "@/constants/colors";
 
+// tab 아이콘 영역
+import Feather from "@expo/vector-icons/Feather";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+
 export default function TabLayout() {
   return (
     <Tabs
@@ -16,20 +20,33 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="workbook"
         options={{
-          title: "Home",
+          title: "문제집",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <Feather name="folder-plus" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="record"
         options={{
-          title: "Explore",
+          title: "풀이 기록",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <Feather name="edit-2" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="setting"
+        options={{
+          title: "내 정보",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account-circle"
+              size={26}
+              color={color}
+            />
           ),
         }}
       />

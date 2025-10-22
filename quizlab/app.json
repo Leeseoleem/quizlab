@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/android-icon-monochrome.png",
+        "foregroundImage": "./assets/images/quizlab-icon-monochrome.png",
         "backgroundImage": "./assets/images/quizlab-icon-background.png",
         "monochromeImage": "./assets/images/quizlab-icon-monochrome.png"
       },

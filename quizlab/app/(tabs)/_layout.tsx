@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { BaseColors, Gray } from "@/constants/colors";
@@ -9,6 +10,9 @@ import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function TabLayout() {
+  // 안전 영역 인셋
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
@@ -16,6 +20,14 @@ export default function TabLayout() {
         tabBarInactiveTintColor: Gray[20],
         headerShown: false,
         tabBarButton: HapticTab,
+        // 탭 바 스타일 커스터마이징
+        tabBarStyle: {
+          backgroundColor: Gray.white,
+          height: 60 + insets.bottom,
+          paddingTop: 12,
+          borderTopLeftRadius: 50,
+          borderTopRightRadius: 50,
+        },
       }}
     >
       <Tabs.Screen

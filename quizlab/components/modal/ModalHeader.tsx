@@ -1,12 +1,11 @@
 import { View, TouchableOpacity, Text } from "react-native";
-import { clsx } from "clsx";
 
 import Feather from "@expo/vector-icons/Feather";
 import { Gray } from "@/constants/colors";
 
 type Variant = "back" | "close";
 
-interface ModalHeaderProps {
+export interface ModalHeaderProps {
   variant: Variant;
   label?: string;
   onPressBack?: () => void;

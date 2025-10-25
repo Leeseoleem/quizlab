@@ -6,7 +6,7 @@ import { Gray } from "@/constants/colors";
 // TextInput 아이콘
 import Octicons from "@expo/vector-icons/Octicons";
 
-interface CommonInputProps {
+export interface CommonInputProps {
   placeholder?: string;
   value?: string;
   onChangeText?: (text: string) => void;

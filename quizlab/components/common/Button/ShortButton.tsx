@@ -6,7 +6,7 @@ type Variant = "primary" | "secondary"; // 버튼 변형 타입
 interface ShortButtonProps {
   variant?: Variant;
   isDisabled?: boolean; // 버튼 비활성화 여부
-  chhildrenRight?: React.ReactNode;
+  childrenRight?: React.ReactNode;
   childrenLeft?: React.ReactNode;
   label: string;
   onPress?: () => void;
@@ -15,7 +15,7 @@ interface ShortButtonProps {
 const ShortButton = ({
   variant = "primary",
   isDisabled = false,
-  chhildrenRight,
+  childrenRight,
   childrenLeft,
   label,
   onPress,
@@ -38,7 +38,7 @@ const ShortButton = ({
     >
       {childrenLeft ? childrenLeft : null}
       <Text className={textClasses}>{label}</Text>
-      {chhildrenRight ? chhildrenRight : null}
+      {childrenRight ? childrenRight : null}
     </TouchableOpacity>
   );
 };

@@ -11,7 +11,7 @@ interface CommonButtonProps {
   label: string;
   onPress?: () => void;
   // 아이콘 추가를 위한 props (선택)
-  chhildrenRight?: React.ReactNode;
+  childrenRight?: React.ReactNode;
   childrenLeft?: React.ReactNode;
 }
 
@@ -21,7 +21,7 @@ const CommonButton = ({
   isDisabled = false,
   label,
   onPress,
-  chhildrenRight,
+  childrenRight,
   childrenLeft,
 }: CommonButtonProps) => {
   const buttonClasses = clsx(
@@ -45,7 +45,7 @@ const CommonButton = ({
     >
       {childrenLeft ? childrenLeft : null}
       <Text className={textClasses}>{label}</Text>
-      {chhildrenRight ? chhildrenRight : null}
+      {childrenRight ? childrenRight : null}
     </TouchableOpacity>
   );
 };

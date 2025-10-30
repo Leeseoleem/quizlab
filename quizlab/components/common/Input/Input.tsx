@@ -7,10 +7,10 @@ import { Gray } from "@/constants/colors";
 import Octicons from "@expo/vector-icons/Octicons";
 
 export interface CommonInputProps {
-  placeholder?: string;
-  value?: string;
-  onChangeText?: (text: string) => void;
-  handleClearInput?: () => void;
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  handleClearInput: () => void;
   maxLength?: number;
   onSubmitEditing?: () => void; // 엔터키 입력 시 호출되는 함수
   secureTextEntry?: boolean; // 비밀번호 입력 여부

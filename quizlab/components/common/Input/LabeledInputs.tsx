@@ -1,4 +1,4 @@
-import LabeledInputContainer from "./LabeledInput";
+import LabeledInputContainer from "./LabeledInputContainer";
 
 // 라벨을 붙일 Input 컴포넌트
 import CommonInput from "./Input";

@@ -13,6 +13,7 @@ export default function TabLayout() {
   // 안전 영역 인셋
   const insets = useSafeAreaInsets();
 
+export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{

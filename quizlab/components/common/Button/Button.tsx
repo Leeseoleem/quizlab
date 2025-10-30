@@ -2,7 +2,7 @@ import { Text, TouchableOpacity } from "react-native";
 import { clsx } from "clsx";
 
 type ButtonShape = "rounded" | "normal"; // 버튼 형태 타입
-type Variant = "primary" | "secondary"; // 버튼 변형 타입
+type Variant = "primary" | "secondary" | "danger"; // 버튼 변형 타입
 
 interface CommonButtonProps {
   rounded?: ButtonShape;
@@ -27,13 +27,15 @@ const CommonButton = ({
   const buttonClasses = clsx(
     "flex flex-row w-full justify-center items-center h-[56px] gap-3",
     rounded === "rounded" ? "rounded-full" : "rounded-xl",
-    variant === "primary" ? "bg-brand" : "bg-gray-white border border-gray-5",
+    variant === "primary" && "bg-brand",
+    variant === "danger" && "bg-danger",
+    variant === "secondary" && "bg-gray-white border border-gray-5",
     isDisabled && "opacity-50" // 비활성화 시 불투명도 적용
   );
 
   const textClasses = clsx(
     "text-subtitle",
-    variant === "primary" ? "text-gray-white" : "text-gray-black"
+    variant === "secondary" ? "text-gray-black" : "text-gray-white"
   );
 
   return (

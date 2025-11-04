@@ -1,4 +1,4 @@
-# quizlab: 당신만의 퀴즈 학습 앱 — 문제집 생성부터 풀이, 기록 확인까지!
+# quizlab- 스스로 만드는 나만의 문제집
 
 <p align="center">
   <img width="512" height="512" alt="quizlab-logo" src="https://github.com/user-attachments/assets/849831b3-6981-49f5-b44f-dc4e0f2a4c6b" />

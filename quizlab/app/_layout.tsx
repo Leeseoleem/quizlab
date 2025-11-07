@@ -47,7 +47,13 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <GestureHandlerRootView className="flex-1">
         <BottomSheetModalProvider>
-          <Stack>
+          <Stack
+            screenOptions={{
+              contentStyle: {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
           <StatusBar style="auto" />

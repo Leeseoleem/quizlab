@@ -37,7 +37,7 @@ const ToggleButton = ({ options, selectedId, onChange }: ToggleButtonProps) => {
 
   return (
     <View className="relative flex-row">
-      <View className="flex-row p-1.5 gap-2 bg-gray-10 rounded-full">
+      <View className="flex-row p-1 gap-1 bg-gray-10 rounded-full">
         {hasLayout && (
           <MotiView
             pointerEvents="none"
@@ -47,7 +47,7 @@ const ToggleButton = ({ options, selectedId, onChange }: ToggleButtonProps) => {
               height: active.height,
             }}
             transition={{ type: "timing", duration: 200 }}
-            className="absolute top-1.5 left-0 bg-white rounded-full"
+            className="absolute top-1 left-0 bg-white rounded-full"
           />
         )}
         {options.map((option, index) => {
@@ -55,14 +55,16 @@ const ToggleButton = ({ options, selectedId, onChange }: ToggleButtonProps) => {
           return (
             <TouchableOpacity
               key={option.id}
-              className="px-6 py-2"
+              className="px-4 py-2"
               onPress={() => onChange(option.id)}
               onLayout={(e) => handleLayout(option.id, e)}
             >
               <MotiText
                 className={clsx(
-                  "text-body",
-                  isActive ? "text-gray-black" : "text-gray-30"
+                  "text-caption",
+                  isActive
+                    ? "text-gray-black font-pretendard-semibold"
+                    : "text-gray-30"
                 )}
               >
                 {option.label}

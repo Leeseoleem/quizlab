@@ -2,8 +2,14 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@mocks/*": ["mocks/*"],
+      "@utils/*": ["utils/*"],
+      "@types/*": ["types/*"],
+      "@components/*": ["components/*"],
+      "@constants/*": ["constants/*"]
     }
   },
   "include": [

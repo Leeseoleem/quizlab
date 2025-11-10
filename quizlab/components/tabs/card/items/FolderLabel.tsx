@@ -5,11 +5,10 @@ import Feather from "@expo/vector-icons/Feather";
 
 import { FolderColors, FolderColorsLight } from "@/constants/colors";
 import type { FolderColorKey } from "@/constants/colors";
-
-type Size = "default" | "large";
+import type { SizeType_A } from "@/types/common.types";
 
 export type FolderLabelProps = {
-  size?: Size;
+  size?: SizeType_A;
   colorKey?: FolderColorKey;
 };
 

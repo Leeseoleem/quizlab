@@ -2,8 +2,9 @@ import { View, Text } from "react-native";
 import { clsx } from "clsx";
 import { Gray } from "@/constants/colors";
 
-import type { SolvedMode } from "@/types/common.types";
+import type { SolvedMode, SizeType_A } from "@/types/common.types";
 import { getSolvedModeLabel } from "@/utils/common.utils";
+
 import Feather from "@expo/vector-icons/Feather";
 
 export const ModeBedge = ({ mode }: { mode: SolvedMode }) => {
@@ -17,7 +18,7 @@ export const ModeBedge = ({ mode }: { mode: SolvedMode }) => {
 };
 
 export interface ModeLabelProps {
-  size?: "default" | "large";
+  size?: SizeType_A;
   mode: SolvedMode;
 }
 

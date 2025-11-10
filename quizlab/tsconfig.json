@@ -9,9 +9,7 @@
       "@utils/*": ["utils/*"],
       "@types/*": ["types/*"],
       "@components/*": ["components/*"],
-      "@constants/*": ["constants/*"],
-
-      "@env": ["node_modules/react-native-dotenv"]
+      "@constants/*": ["constants/*"]
     }
   },
   "include": [

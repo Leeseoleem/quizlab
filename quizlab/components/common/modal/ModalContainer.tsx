@@ -2,7 +2,7 @@ import { Pressable, View, Modal } from "react-native";
 
 import ModalHeader from "./ModalHeader";
 import type { ModalHeaderProps } from "./ModalHeader";
-import CommonButton from "../common/Button/Button";
+import CommonButton from "../Button/Button";
 
 interface ModalContentsConfig {
   /**

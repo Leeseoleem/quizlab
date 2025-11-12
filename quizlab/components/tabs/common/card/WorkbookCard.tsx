@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Pressable } from "react-native";
 import { clsx } from "clsx";
 
 import { FolderLabel } from "../items/FolderLabel";
-import { ModeLabel } from "../../label/ModeItems";
+import { ModeLabel } from "../label/ModeItems";
 import { CountItems } from "../items/CountItems";
 
 import type { FolderLabelProps } from "../items/FolderLabel";

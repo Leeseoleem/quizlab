@@ -82,7 +82,7 @@ const PopoverMenu = ({
       <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
 
       <View
-        className="absolute bg-gray-white shadow-md rounded-xl p-2 overflow-hidden"
+        className="absolute bg-gray-5 border border-gray-10 shadow-md rounded-xl p-2 overflow-hidden"
         style={
           pos ? { left: pos.left, top: pos.top, opacity: 1 } : { opacity: 0 }
         }

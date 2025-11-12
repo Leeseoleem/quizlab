@@ -24,6 +24,7 @@ const ColorIconButton = ({
     "border-2 rounded-full",
     isSelected ? "border-brandAccent" : "border-gray-white"
   );
+
   return (
     <TouchableOpacity
       className={lineClass}

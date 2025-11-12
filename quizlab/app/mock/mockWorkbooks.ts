@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import type { Workbook } from "@/types/workbook/workbook.types";
 
-export const mockWorkbooks: Workbook[] = [
+const mockWorkbooks: Workbook[] = [
   {
     id: "wkb_001",
     title: "정보처리기사 1과목",
@@ -195,3 +195,5 @@ export const mockWorkbooks: Workbook[] = [
     totalCount: 30,
   },
 ];
+
+export default mockWorkbooks;

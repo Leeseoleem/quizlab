@@ -29,7 +29,7 @@ const CommonButton = ({
     rounded === "rounded" ? "rounded-full" : "rounded-xl",
     variant === "primary" && "bg-brand",
     variant === "danger" && "bg-danger",
-    variant === "secondary" && "bg-gray-white border border-gray-5",
+    variant === "secondary" && "bg-gray-white border border-gray-20",
     isDisabled && "opacity-50" // 비활성화 시 불투명도 적용
   );
 

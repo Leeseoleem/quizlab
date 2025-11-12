@@ -12,12 +12,16 @@ import type { SolvedMode } from "@/types/common.types";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Gray } from "@/constants/colors";
 
+// 부모가 내려줄 앵커 ref 타입(객체/콜백 둘 다 수용)
+type MenuAnchorRef = React.RefObject<View | null>;
+
 // 공통 베이스
 interface WorkbookBase extends FolderLabelProps {
   title: string; // 카드 제목
   handleCardPress: () => void; // 카드 전체 클릭 핸들러
   handleMenuPress: () => void; // 메뉴 버튼 클릭 핸들러
   totalCount: number; // 항목 개수
+  menuAnchorRef: MenuAnchorRef;
 }
 
 // 기본 문제집 카드 속성
@@ -53,6 +57,7 @@ const WorkbookCard = (props: WorkbookCardProps) => {
     totalCount,
     handleCardPress,
     handleMenuPress,
+    menuAnchorRef,
     ...FolderLabelProps
   } = props;
 
@@ -63,9 +68,13 @@ const WorkbookCard = (props: WorkbookCardProps) => {
       className="flex-col w-full px-4 py-5 gap-5 bg-white rounded-xl shadow-md"
       onPress={handleCardPress}
     >
-      <View className="flex flex-row justify-between items-center">
+      <View
+        collapsable={false}
+        className="flex flex-row justify-between items-center"
+      >
         <FolderLabel {...FolderLabelProps} />
         <TouchableOpacity
+          ref={menuAnchorRef}
           className={clsx("p-2 rounded-full", onPressIn && "bg-gray-10")}
           onPressIn={() => {
             setOnPressIn(true);

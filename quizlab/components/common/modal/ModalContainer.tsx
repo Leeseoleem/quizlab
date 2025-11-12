@@ -54,7 +54,7 @@ const ModalContainer = ({ contents, header, footer }: ModalContainerProps) => {
             <View>{contents.children}</View>
             <View>
               {footer && (
-                <View className="flex w-full px-6 gap-3 pb-6">
+                <View className="flex w-full p-5 gap-3">
                   <CommonButton
                     label={footer.confirmLabel ?? "확인"}
                     onPress={footer.onConfirm}

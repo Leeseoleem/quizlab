@@ -36,7 +36,7 @@ const RoundedButtonContainer = ({
           duration: 120, // 부드럽게 줄어드는 시간 (ms)
         }}
         className={clsx(
-          "w-12 h-12 rounded-full justify-center items-center",
+          "w-[48px] h-[48px] rounded-full justify-center items-center",
           disabled && "opacity-50",
           className // 외부 스타일 덮어쓰기 가능
         )}

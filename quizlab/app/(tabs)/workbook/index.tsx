@@ -2,6 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { MotiView, AnimatePresence } from "moti";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { View, Text, FlatList, Pressable, Keyboard } from "react-native";
+import { useRouter } from "expo-router";
 
 import mockWorkbooks from "@/app/mock/mockWorkbooks";
 import { workbookTexts } from "@/constants/texts/workbook";
@@ -23,6 +24,8 @@ import AddWorkbookButton from "@/components/tabs/workbook/AddWorkbookButton";
 import ScrollToTopButton from "@/components/common/Button/ScrollToTopButton";
 
 export default function WorkbookScreen() {
+  // 라우터 객체 가져오기
+  const router = useRouter();
   /**
    * 스크롤 위치에 따른 상단 이동 버튼 표시 여부 관리
    */
@@ -98,9 +101,18 @@ export default function WorkbookScreen() {
   };
 
   // 카드 클릭 핸들러 (목록 전체 클릭)
-  const handleCardPress = (id: string) => {
-    console.log("카드 클릭:", id);
+  const handleCardPress = (
+    id: string,
+    color: FolderColorKey,
+    title: string,
+    description: string
+  ) => {
+    console.log("카드 클릭:", id, title);
     // 예: navigate(`/folder/${id}`)
+    router.push({
+      pathname: "/workbook/[id]",
+      params: { id, color, title, description }, // [id]에 들어갈 실제 값
+    });
   };
 
   // FlatList 참조
@@ -115,7 +127,9 @@ export default function WorkbookScreen() {
         totalCount={item.totalCount}
         colorKey={item.color}
         menuAnchorRef={getAnchorRef(item.id)}
-        handleCardPress={() => handleCardPress(item.id)}
+        handleCardPress={() =>
+          handleCardPress(item.id, item.color, item.title, item.description)
+        }
         handleMenuPress={() => {
           setOpenMenuId((prev) => (prev === item.id ? null : item.id));
         }}

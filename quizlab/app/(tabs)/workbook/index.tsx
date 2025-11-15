@@ -48,8 +48,9 @@ export default function WorkbookScreen() {
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDescription, setNewDescription] = useState<string>("");
 
-  const [isSelectedColor, setIsSelectedColor] =
-    useState<FolderColorKey | null>();
+  const [isSelectedColor, setIsSelectedColor] = useState<FolderColorKey | null>(
+    null
+  );
 
   const handleCloseAddModal = () => {
     setIsAddVisible(false);
@@ -175,7 +176,7 @@ export default function WorkbookScreen() {
               setSelectedColor: (colorKey: FolderColorKey) =>
                 setIsSelectedColor(colorKey),
             },
-            isColorValid: isSelectedColor !== null,
+            isColorValid: !!isSelectedColor,
             onPrevStep: onPrevStep,
             handleAddWorkbook: () => {
               console.log("새 문제집 추가:", {
@@ -195,7 +196,7 @@ export default function WorkbookScreen() {
           onClose={handleCloseColorModal}
           selectedColor={selectedColorFilter}
           setSelectedColor={setSelectedColorFilter}
-          isDisabled={selectedColorFilter === null}
+          isDisabled={!!selectedColorFilter}
           handleApplyColorFilter={() => {
             console.log("선택된 색상:", selectedColorFilter);
             setIsColorModalVisible(false);

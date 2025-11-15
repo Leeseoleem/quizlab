@@ -21,7 +21,6 @@ const ColorPickerSection = ({
             colorKey={key}
             onPress={() => {
               setSelectedColor(key);
-              console.log("선택된 색상:", key);
             }}
             isSelected={selectedColor === key}
           />

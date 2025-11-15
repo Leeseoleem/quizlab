@@ -18,7 +18,7 @@ const ToggleButton = ({ options, selectedId, onChange }: ToggleButtonProps) => {
   // 토글 크기를 받는 state
   const [optionLayout, setOptionLayout] = useState<
     Record<
-      string, // label을 key로 사용
+      string, // id를 key로 사용
       {
         x: number;
         width: number;

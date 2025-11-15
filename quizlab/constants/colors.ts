@@ -30,14 +30,14 @@ export const FolderColors: Record<FolderColorKey, string> = {
 
 // Light 톤
 export const FolderColorsLight: Record<FolderColorKey, string> = {
-  teal: "#8FD9CF",
-  sky: "#9BCEF1",
-  lavender: "#DAB9EB",
-  coral: "#F7B9B4",
-  amber: "#FADE9F",
+  teal: "#BCE8E1",
+  sky: "#C8E4F8",
+  lavender: "#E7CEF4",
+  coral: "#FAD1CD",
+  amber: "#FCE6A5",
   green: "#C0FFD0",
-  rose: "#F19D9D",
-  sand: "#F1E7D3",
+  rose: "#F6B7B7",
+  sand: "#F5F2EB",
 };
 
 export type GrayStep =

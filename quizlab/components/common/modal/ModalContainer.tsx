@@ -2,7 +2,7 @@ import { Pressable, View, Modal } from "react-native";
 
 import ModalHeader from "./ModalHeader";
 import type { ModalHeaderProps } from "./ModalHeader";
-import CommonButton from "../common/Button/Button";
+import CommonButton from "../Button/Button";
 
 interface ModalContentsConfig {
   /**
@@ -17,9 +17,11 @@ interface ModalFooterConfig {
   /**
    * 모달 하단(버튼) 영역
    */
+  isConfirmDisabled?: boolean;
   confirmLabel?: string;
-  cancelLabel?: string;
   onConfirm?: () => void;
+  isCancelDisabled?: boolean;
+  cancelLabel?: string;
   onCancel?: () => void;
 }
 
@@ -54,12 +56,14 @@ const ModalContainer = ({ contents, header, footer }: ModalContainerProps) => {
             <View>{contents.children}</View>
             <View>
               {footer && (
-                <View className="flex w-full px-6 gap-3 pb-6">
+                <View className="flex w-full p-5 gap-3">
                   <CommonButton
+                    isDisabled={footer.isConfirmDisabled}
                     label={footer.confirmLabel ?? "확인"}
                     onPress={footer.onConfirm}
                   />
                   <CommonButton
+                    isDisabled={footer.isCancelDisabled}
                     variant="secondary"
                     label={footer.cancelLabel ?? "취소"}
                     onPress={footer.onCancel}

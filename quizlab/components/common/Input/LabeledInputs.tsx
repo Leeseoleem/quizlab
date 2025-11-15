@@ -8,11 +8,12 @@ import SpinnerInput from "./SpinnerInput";
 import type { SpinnerInputProps } from "./SpinnerInput";
 
 export const LabeledCommonInput = ({
+  isRequired = false,
   label,
   ...inputProps
-}: { label: string } & CommonInputProps) => {
+}: { isRequired?: boolean; label: string } & CommonInputProps) => {
   return (
-    <LabeledInputContainer label={label}>
+    <LabeledInputContainer isRequired={isRequired} label={label}>
       <CommonInput {...inputProps} />
     </LabeledInputContainer>
   );

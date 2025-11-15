@@ -139,13 +139,13 @@ export default function WorkbookScreen() {
     {
       type: "default",
       name: "pencil",
-      label: "수정하기",
+      label: workbookTexts.main.popover.edit,
       onPressItem: () => console.log("수정하기"),
     },
     {
       type: "danger",
       name: "trash",
-      label: "삭제하기",
+      label: workbookTexts.main.popover.delete,
       onPressItem: () => console.log("삭제하기"),
     },
   ];
@@ -196,7 +196,7 @@ export default function WorkbookScreen() {
           onClose={handleCloseColorModal}
           selectedColor={selectedColorFilter}
           setSelectedColor={setSelectedColorFilter}
-          isDisabled={!!selectedColorFilter}
+          isDisabled={!selectedColorFilter}
           handleApplyColorFilter={() => {
             console.log("선택된 색상:", selectedColorFilter);
             setIsColorModalVisible(false);

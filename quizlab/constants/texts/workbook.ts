@@ -7,6 +7,10 @@ export const workbookTexts = {
       { id: "all", label: "전체" },
       { id: "color", label: "색상별" },
     ],
+    popover: {
+      edit: `수정하기`,
+      delete: `삭제하기`,
+    },
     colorPickerModal: {
       headerLabel: "색상 선택하기",
       selectButtonLabel: "선택하기",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Modal, View, Pressable, StyleSheet, Dimensions } from "react-native";
 import MenuListItem from "../label/MenuListItem";
 import type { MenuListItemProps } from "../label/MenuListItem";
@@ -18,58 +18,64 @@ const PopoverMenu = ({
   popoverRef,
   items,
 }: PopoverMenuProps) => {
-  // 화면 크기 메모이제이션
+  // 화면 크기 (초기 렌더 기준으로 한 번만 계산)
   const screenSize = useMemo(() => Dimensions.get("window"), []);
-  const [menuSize, setMenuSize] = useState({ w: 0, h: 0 });
+
+  // 메뉴 실제 렌더 크기
+  const [menuWidth, setMenuWidth] = useState(0);
+  const [menuHeight, setMenuHeight] = useState(0);
+
+  // 팝오버 좌표 상태
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
 
-  const timeoutRef = useRef<number | null>(null);
-
   // 위치 계산 함수
-  const measurePosition = () => {
+  const measurePosition = useCallback(() => {
+    // 앵커(ref)나 메뉴 크기가 준비되지 않으면 패스
     if (!popoverRef?.current) return;
-    if (menuSize.w === 0 && menuSize.h === 0) return; // 메뉴 크기 없으면 패스
+    if (!menuWidth || !menuHeight) return;
 
     // 기준(anchor) 좌표 측정
     popoverRef.current.measureInWindow((x, y, aw, ah) => {
-      // 오른쪽 정렬 예시: 메뉴의 오른쪽을 버튼 오른쪽에 맞춤
-      let left = x + aw - menuSize.w;
+      // 오른쪽 정렬: 메뉴의 오른쪽을 버튼 오른쪽에 맞춤
+      let left = x + aw - menuWidth;
       let top = y + ah + EDGE_GAP;
 
-      // 넘침 보정
-      if (left + menuSize.w + EDGE_GAP > screenSize.width) {
-        left = screenSize.width - menuSize.w - EDGE_GAP;
+      // 가로 방향 넘침 보정
+      if (left + menuWidth + EDGE_GAP > screenSize.width) {
+        left = screenSize.width - menuWidth - EDGE_GAP;
       }
       if (left < EDGE_GAP) left = EDGE_GAP;
-      if (top + menuSize.h + EDGE_GAP > screenSize.height) {
-        top = y - menuSize.h - EDGE_GAP;
+
+      // 세로 방향 넘침 보정
+      if (top + menuHeight + EDGE_GAP > screenSize.height) {
+        top = y - menuHeight - EDGE_GAP;
       }
       if (top < EDGE_GAP) top = EDGE_GAP;
 
+      // 최종 좌표 저장
       setPos({ left, top });
     });
-  };
+  }, [popoverRef, menuWidth, menuHeight, screenSize]);
 
-  // 모달이 뜨면 한 틱 미룬 뒤 측정 시도
-  const handleShow = () => {
-    // setTimeout으로 렌더/애니메이션 한 사이클 뒤로 미루기
-    timeoutRef.current = setTimeout(() => {
-      // menuSize가 아직 0이면 onLayout 이후에 measurePosition이 또 불릴 것
-      measurePosition();
-    }, 0); // 0~16 사이(한 프레임)면 충분
-  };
-
-  // visible 해제 시 정리
+  // visible / 메뉴 크기 변경에 따라 위치 재계산 및 정리
   useEffect(() => {
+    // 모달이 닫히면 상태 초기화
     if (!visible) {
       setPos(null);
-      setMenuSize({ w: 0, h: 0 });
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
+      setMenuWidth(0);
+      setMenuHeight(0);
+      return;
     }
-  }, [visible]);
+
+    // 메뉴 크기를 아직 모르면 계산하지 않음
+    if (!menuWidth || !menuHeight) return;
+
+    // 레이아웃이 안정된 다음 프레임에 위치 계산
+    const id = setTimeout(measurePosition, 0);
+
+    // cleanup: 다음 렌더 전에 이전 타이머 제거
+    return () => clearTimeout(id);
+  }, [visible, menuWidth, menuHeight, measurePosition]);
 
   return (
     <Modal
@@ -77,8 +83,8 @@ const PopoverMenu = ({
       onRequestClose={onClose}
       transparent
       animationType="fade"
-      onShow={handleShow} // ← 모달 표시 후 setTimeout으로 지연 측정
     >
+      {/* 바깥 영역 누르면 닫기 */}
       <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
 
       <View
@@ -86,18 +92,20 @@ const PopoverMenu = ({
         style={
           pos ? { left: pos.left, top: pos.top, opacity: 1 } : { opacity: 0 }
         }
-        pointerEvents={pos ? "auto" : "none"} // 좌표 확정 전 터치 방지
+        // 좌표 확정 전에는 터치 방지
+        pointerEvents={pos ? "auto" : "none"}
         onLayout={(e) => {
-          // 메뉴 실제 렌더 크기 확보
           const { width, height } = e.nativeEvent.layout;
-          const changed = menuSize.w !== width || menuSize.h !== height;
-          if (changed) setMenuSize({ w: width, h: height });
 
-          // 크기를 처음 얻은 순간 다시 한 번 측정
-          if ((width > 0 || height > 0) && (!pos || changed)) {
-            // setTimeout으로 한 틱 미루고 측정 → 레이아웃 확정 보장
-            setTimeout(measurePosition, 0);
-          }
+          // 0인 값은 의미 없으니 무시
+          if (width <= 0 || height <= 0) return;
+
+          // 이전 값과 완전히 같으면 state 업데이트하지 않음
+          if (width === menuWidth && height === menuHeight) return;
+
+          // 실제로 크기가 바뀐 경우에만 setState
+          setMenuWidth(width);
+          setMenuHeight(height);
         }}
       >
         {items.map((item, index) => (

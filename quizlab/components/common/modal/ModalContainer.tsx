@@ -17,9 +17,11 @@ interface ModalFooterConfig {
   /**
    * 모달 하단(버튼) 영역
    */
+  isConfirmDisabled?: boolean;
   confirmLabel?: string;
-  cancelLabel?: string;
   onConfirm?: () => void;
+  isCancelDisabled?: boolean;
+  cancelLabel?: string;
   onCancel?: () => void;
 }
 
@@ -56,10 +58,12 @@ const ModalContainer = ({ contents, header, footer }: ModalContainerProps) => {
               {footer && (
                 <View className="flex w-full p-5 gap-3">
                   <CommonButton
+                    isDisabled={footer.isConfirmDisabled}
                     label={footer.confirmLabel ?? "확인"}
                     onPress={footer.onConfirm}
                   />
                   <CommonButton
+                    isDisabled={footer.isCancelDisabled}
                     variant="secondary"
                     label={footer.cancelLabel ?? "취소"}
                     onPress={footer.onCancel}

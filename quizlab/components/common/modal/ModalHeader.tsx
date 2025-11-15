@@ -23,7 +23,7 @@ const ModalHeader = ({
       {variant === "back" && (
         <View className="flex flex-row w-full justify-start items-center gap-5">
           <TouchableOpacity onPress={onPressBack} activeOpacity={0.8}>
-            <Feather name="chevron-left" size={16} color={Gray.black} />
+            <Feather name="chevron-left" size={20} color={Gray.black} />
           </TouchableOpacity>
           <Text className="text-body text-gray-black">{label}</Text>
         </View>
@@ -32,7 +32,7 @@ const ModalHeader = ({
         <View className="flex flex-row w-full justify-between items-center">
           <Text className="text-body text-gray-black">{label}</Text>
           <TouchableOpacity onPress={onPressClose} activeOpacity={0.8}>
-            <Feather name="x" size={16} color={Gray.black} />
+            <Feather name="x" size={20} color={Gray.black} />
           </TouchableOpacity>
         </View>
       )}

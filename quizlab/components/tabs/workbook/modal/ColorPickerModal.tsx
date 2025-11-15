@@ -4,18 +4,18 @@ import ModalContainer from "@/components/common/modal/ModalContainer";
 import ColorPickerSection from "../ColorPickerSection";
 import type { ColorPickerProps } from "../ColorPickerSection";
 
-interface SelectColorModalProps extends ColorPickerProps {
+interface ColorPickerModalProps extends ColorPickerProps {
   isVisible: boolean;
   onClose: () => void;
-  handleSelectedColor: () => void;
+  handleApplyColorFilter: () => void;
 }
 
-const SelectColorModal = ({
+const ColorPickerModal = ({
   isVisible,
   onClose,
-  handleSelectedColor,
+  handleApplyColorFilter,
   ...colorPickerProps
-}: SelectColorModalProps) => {
+}: ColorPickerModalProps) => {
   return (
     <ModalContainer
       contents={{
@@ -25,17 +25,17 @@ const SelectColorModal = ({
       }}
       header={{
         variant: "close",
-        label: workbookTexts.main.selectColorModal.headerLabel,
+        label: workbookTexts.main.colorPickerModal.headerLabel,
         onPressClose: onClose,
       }}
       footer={{
-        confirmLabel: workbookTexts.main.selectColorModal.selectButtonLabel,
-        onConfirm: handleSelectedColor,
-        cancelLabel: workbookTexts.main.selectColorModal.cancelButtonLabel,
+        confirmLabel: workbookTexts.main.colorPickerModal.selectButtonLabel,
+        onConfirm: handleApplyColorFilter,
+        cancelLabel: workbookTexts.main.colorPickerModal.cancelButtonLabel,
         onCancel: onClose,
       }}
     />
   );
 };
 
-export default SelectColorModal;
+export default ColorPickerModal;

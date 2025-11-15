@@ -8,12 +8,14 @@ interface ColorPickerModalProps extends ColorPickerProps {
   isVisible: boolean;
   onClose: () => void;
   handleApplyColorFilter: () => void;
+  isDisabled?: boolean;
 }
 
 const ColorPickerModal = ({
   isVisible,
   onClose,
   handleApplyColorFilter,
+  isDisabled = false,
   ...colorPickerProps
 }: ColorPickerModalProps) => {
   return (
@@ -29,6 +31,7 @@ const ColorPickerModal = ({
         onPressClose: onClose,
       }}
       footer={{
+        isConfirmDisabled: isDisabled,
         confirmLabel: workbookTexts.main.colorPickerModal.selectButtonLabel,
         onConfirm: handleApplyColorFilter,
         cancelLabel: workbookTexts.main.colorPickerModal.cancelButtonLabel,

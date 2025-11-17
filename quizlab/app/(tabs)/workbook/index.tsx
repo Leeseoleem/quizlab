@@ -1,7 +1,14 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MotiView, AnimatePresence } from "moti";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { View, Text, FlatList, Pressable, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  RefreshControl,
+  Pressable,
+  Keyboard,
+} from "react-native";
 import { useRouter } from "expo-router";
 
 import mockWorkbooks from "@/app/mock/mockWorkbooks";
@@ -117,6 +124,8 @@ export default function WorkbookScreen() {
 
   // FlatList 참조
   const cardListRef = useRef<FlatList>(null);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   const renderItem = useCallback(
     ({ item }: { item: (typeof mockWorkbooks)[number] }) => (
@@ -257,6 +266,19 @@ export default function WorkbookScreen() {
               </View>
             );
           }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {
+                setRefreshing(true);
+                // 추후 새로고침 로직 구현 (예: 데이터 재요청)
+                setTimeout(() => {
+                  console.log("새로고침 되었습니다.");
+                  setRefreshing(false);
+                }, 1000);
+              }}
+            />
+          }
         />
       </Pressable>
       <PopoverMenu

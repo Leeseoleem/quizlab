@@ -93,6 +93,9 @@ export default function WorkbookScreen() {
 
   // 색상 필터 모달 참조
   const colorFilterRef = useRef<BottomSheetModal>(null);
+  // 선택된 색상 필터 상태 관리
+  const [selectedColorFilter, setSelectedColorFilter] =
+    useState<FolderColorKey | null>(null);
 
   // 모달 열기
   const handleOpenColorFilter = () => {
@@ -111,14 +114,41 @@ export default function WorkbookScreen() {
     setIsToggleSelected(workbookTexts.main.toggle[0].id);
   };
 
-  const [selectedColorFilter, setSelectedColorFilter] =
-    useState<FolderColorKey | null>(null);
+  // 색상 필터 선택 확인 상태 관리
+  const [isConfirming, setIsConfirming] = useState(false);
 
-  // isToggleSelected 변경 시 모달 상태 업데이트
   useEffect(() => {
+    if (selectedColorFilter === null) {
+      setIsConfirming(true);
+    } else {
+      setIsConfirming(false);
+    }
+  }, [selectedColorFilter]);
+
+  // 색상 필터 선택 확인 핸들러
+  const handleSelectColorFilter = () => {
+    console.log("선택된 색상 필터:", selectedColorFilter);
+    colorFilterRef.current?.close();
+  };
+
+  const handleBackdropPress = () => {
+    if (selectedColorFilter === null) {
+      setIsToggleSelected(workbookTexts.main.toggle[0].id);
+    } else {
+      // 추후 색상 선택 관련 로직 추가
+      console.log("선택된 색상 필터:", selectedColorFilter);
+    }
+  };
+
+  // isToggleSelected 변경 시 모달 상태 업데이트 함수
+  useEffect(() => {
+    // 토글 변경 시 목록 최상단으로 스크롤
+    cardListRef.current?.scrollToOffset({ offset: 0, animated: true });
     if (isToggleSelected === "color") {
-      cardListRef.current?.scrollToOffset({ offset: 0, animated: true });
       handleOpenColorFilter();
+    } else {
+      // '전체' 선택 시 색상 필터 초기화
+      setSelectedColorFilter(null);
     }
   }, [isToggleSelected]);
 
@@ -316,9 +346,9 @@ export default function WorkbookScreen() {
       <ColorFilterBottomModal
         ref={colorFilterRef}
         onClose={handleCloseColorFilter}
-        onConfirm={() => {
-          console.log("선택된 색상 필터:", selectedColorFilter);
-        }}
+        handleBackdropPress={handleBackdropPress}
+        disabled={isConfirming}
+        onConfirm={handleSelectColorFilter}
         selectedColor={selectedColorFilter}
         setSelectedColor={setSelectedColorFilter}
       />

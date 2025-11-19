@@ -52,9 +52,9 @@ const AddWorkbookModal = ({
               {step === "info" ? (
                 <MotiView
                   key="info-step"
-                  from={{ opacity: 0, translateX: -8 }}
+                  from={{ opacity: 0.5, translateX: -12 }}
                   animate={{ opacity: 1, translateX: 0 }}
-                  exit={{ opacity: 0, translateX: 8 }}
+                  exit={{ opacity: 0.5, translateX: 12 }}
                   transition={{ type: "timing", duration: 200 }}
                 >
                   {/* 문제집 정보 입력 영역 */}
@@ -88,9 +88,9 @@ const AddWorkbookModal = ({
               ) : (
                 <MotiView
                   key="color-step"
-                  from={{ opacity: 0, translateX: 8 }}
+                  from={{ opacity: 0.5, translateX: 12 }}
                   animate={{ opacity: 1, translateX: 0 }}
-                  exit={{ opacity: 0, translateX: -8 }}
+                  exit={{ opacity: 0.5, translateX: -12 }}
                   transition={{ type: "timing", duration: 200 }}
                 >
                   {/* 색상 선택 영역 */}

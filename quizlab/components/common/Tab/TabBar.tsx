@@ -3,7 +3,7 @@ import { View } from "react-native";
 
 import type { TabProps } from "./tabTypes";
 
-const TabBar = ({ items, activeId, onChange }: TabProps) => {
+function TabBar<T extends string>({ items, activeId, onChange }: TabProps<T>) {
   return (
     <View className="flex flex-row w-full">
       {items.map((item, i) => {
@@ -23,6 +23,6 @@ const TabBar = ({ items, activeId, onChange }: TabProps) => {
       })}
     </View>
   );
-};
+}
 
 export default TabBar;

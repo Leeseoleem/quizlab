@@ -75,12 +75,18 @@ export default function WorkbookDetailScreen() {
 
   // 에러 발생 시 에러 메시지 표시
   useEffect(() => {
-    if (error) {
-      console.warn(error);
-      setTimeout(() => {
-        router.back();
-      }, 2000);
-    }
+    if (!error) return;
+
+    console.warn(error);
+
+    const timeoutId = setTimeout(() => {
+      router.back();
+    }, 2000);
+
+    return () => {
+      // 타이머 정리: 언마운트/의존성 변경 시 중복 실행 방지
+      clearTimeout(timeoutId);
+    };
   }, [error, router]);
 
   if (!workbookParams && !error) {

@@ -8,14 +8,14 @@ import {
 } from "@gorhom/bottom-sheet";
 
 interface BottomModalProps {
-  onClose: () => void;
+  handleBackdropPress: () => void;
   children: ReactNode;
 }
 
 export const BottomModalContainer = forwardRef<
   BottomSheetModal,
   BottomModalProps
->(({ onClose, children }, ref) => {
+>(({ handleBackdropPress, children }, ref) => {
   /**
    * renderBackdrop: 백드롭(배경 오버레이) 렌더링 함수
    */
@@ -25,7 +25,8 @@ export const BottomModalContainer = forwardRef<
       appearsOnIndex={0} // 모달이 열릴 때 나타남
       disappearsOnIndex={-1} // 모달이 닫힐 때 사라짐
       opacity={0.5} // 백드롭 투명도 (0~1)
-      onPress={onClose}
+      pressBehavior="close" // 백드롭 눌렀을 때 모달 닫기
+      onPress={handleBackdropPress}
     />
   );
 

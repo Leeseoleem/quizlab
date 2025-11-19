@@ -162,7 +162,6 @@ export default function WorkbookScreen() {
     description: string,
     totalCount: number
   ) => {
-    console.log("카드 클릭:", id, title);
     // 예: navigate(`/folder/${id}`)
     router.push({
       pathname: "/workbook/[id]",

@@ -159,13 +159,14 @@ export default function WorkbookScreen() {
     id: string,
     color: FolderColorKey,
     title: string,
-    description: string
+    description: string,
+    totalCount: number
   ) => {
     console.log("카드 클릭:", id, title);
     // 예: navigate(`/folder/${id}`)
     router.push({
       pathname: "/workbook/[id]",
-      params: { id, color, title, description }, // [id]에 들어갈 실제 값
+      params: { id, color, title, description, totalCount }, // [id]에 들어갈 실제 값
     });
   };
 
@@ -184,7 +185,13 @@ export default function WorkbookScreen() {
         colorKey={item.color}
         menuAnchorRef={getAnchorRef(item.id)}
         handleCardPress={() =>
-          handleCardPress(item.id, item.color, item.title, item.description)
+          handleCardPress(
+            item.id,
+            item.color,
+            item.title,
+            item.description,
+            item.totalCount
+          )
         }
         handleMenuPress={() => {
           setOpenMenuId((prev) => (prev === item.id ? null : item.id));

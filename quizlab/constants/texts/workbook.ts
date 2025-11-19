@@ -2,7 +2,9 @@ export const workbookTexts = {
   main: {
     title: "문제집",
     placeholder: "문제집을 검색해보세요!",
-    emptyText: "검색 결과가 없습니다.\n다른 검색어를 시도해보세요.",
+    emptyText:
+      "아직 등록된 문제집이 없습니다.\n[+] 버튼으로 새 문제집을 만들어보세요!",
+    searchEmptyText: "검색 결과가 없습니다.\n다른 검색어를 시도해보세요.",
     toggle: [
       { id: "all", label: "전체" },
       { id: "color", label: "색상별" },
@@ -28,5 +30,8 @@ export const workbookTexts = {
       addButtonLabel: "문제집 추가하기",
       cancelButtonLabel: "취소",
     },
+  },
+  detail: {
+    header: "목록으로",
   },
 };

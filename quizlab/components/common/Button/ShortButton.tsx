@@ -22,7 +22,7 @@ const ShortButton = ({
 }: ShortButtonProps) => {
   const buttonClasses = clsx(
     "flex flex-row px-6 h-[48px] justify-center items-center rounded-xl gap-3",
-    variant === "primary" ? "bg-brand" : "bg-gray-white border border-gray-5",
+    variant === "primary" ? "bg-brand" : "bg-gray-white border border-gray-20",
     isDisabled && "opacity-50" // 비활성화 시 불투명도 적용
   );
   const textClasses = clsx(

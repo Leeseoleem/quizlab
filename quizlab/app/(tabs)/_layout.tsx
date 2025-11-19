@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Tabs, usePathname, router, Href } from "expo-router";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -13,6 +13,32 @@ export default function TabLayout() {
   // 안전 영역 인셋
   const insets = useSafeAreaInsets();
 
+  // 현재 활성화 된 경로
+  const pathname = usePathname();
+
+  console.log("Current Pathname:", pathname);
+
+  // 상세 페이지에서는 탭 바 숨기기
+  const hideTabBar = () => {
+    if (!pathname) return false;
+
+    if (pathname.startsWith("/workbook/") && pathname !== "/workbook") {
+      return true;
+    }
+    return false;
+  };
+
+  // 탭 바 이동 핸들러
+  const handleTabPress = (path: Href) => ({
+    tabPress: (e: any) => {
+      // 기본 동작 방지
+      e.preventDefault();
+
+      // 기본 탭 화면으로 이동
+      router.navigate(path);
+    },
+  });
+
   return (
     <Tabs
       screenOptions={{
@@ -21,13 +47,16 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         // 탭 바 스타일 커스터마이징
-        tabBarStyle: {
-          backgroundColor: Gray.white,
-          height: 60 + insets.bottom,
-          paddingTop: 12,
-          borderTopLeftRadius: 50,
-          borderTopRightRadius: 50,
-        },
+        tabBarStyle: [
+          {
+            backgroundColor: Gray.white,
+            height: 60 + insets.bottom,
+            paddingTop: 12,
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 50,
+          },
+          hideTabBar() ? { display: "none" } : undefined,
+        ],
       }}
     >
       <Tabs.Screen
@@ -38,6 +67,7 @@ export default function TabLayout() {
             <Feather name="folder-plus" size={24} color={color} />
           ),
         }}
+        listeners={handleTabPress("/workbook")}
       />
       <Tabs.Screen
         name="record"
@@ -47,6 +77,7 @@ export default function TabLayout() {
             <Feather name="edit-2" size={24} color={color} />
           ),
         }}
+        listeners={handleTabPress("/record")}
       />
       <Tabs.Screen
         name="setting"
@@ -60,6 +91,7 @@ export default function TabLayout() {
             />
           ),
         }}
+        listeners={handleTabPress("/setting")}
       />
     </Tabs>
   );

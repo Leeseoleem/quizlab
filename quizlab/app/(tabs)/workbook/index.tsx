@@ -1,7 +1,16 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MotiView, AnimatePresence } from "moti";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { View, Text, FlatList, Pressable, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  RefreshControl,
+  Pressable,
+  Keyboard,
+} from "react-native";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useRouter } from "expo-router";
 
 import mockWorkbooks from "@/app/mock/mockWorkbooks";
 import { workbookTexts } from "@/constants/texts/workbook";
@@ -9,7 +18,7 @@ import type { FolderColorKey } from "@/constants/colors";
 
 import AddWorkbookModal from "@/components/tabs/workbook/modal/AddWorkbookModal";
 import type { Step } from "@/components/tabs/workbook/modal/AddWorkbookModal";
-import ColorPickerModal from "@/components/tabs/workbook/modal/ColorPickerModal";
+import ColorFilterBottomModal from "@/components/tabs/workbook/modal/ColorFilterBottomModal";
 
 import WorkbookCard from "@/components/tabs/common/card/WorkbookCard";
 import PopoverMenu from "@/components/tabs/common/button/PopoverMenu";
@@ -23,6 +32,8 @@ import AddWorkbookButton from "@/components/tabs/workbook/AddWorkbookButton";
 import ScrollToTopButton from "@/components/common/Button/ScrollToTopButton";
 
 export default function WorkbookScreen() {
+  // 라우터 객체 가져오기
+  const router = useRouter();
   /**
    * 스크롤 위치에 따른 상단 이동 버튼 표시 여부 관리
    */
@@ -76,35 +87,92 @@ export default function WorkbookScreen() {
   /**
    * 토글 버튼 선택 상태 관리
    */
-  const [isSelected, setIsSelected] = useState(workbookTexts.main.toggle[0].id);
+  const [isToggleSelected, setIsToggleSelected] = useState(
+    workbookTexts.main.toggle[0].id
+  );
 
-  const [isColorModalVisible, setIsColorModalVisible] =
-    useState<boolean>(false);
-
+  // 색상 필터 모달 참조
+  const colorFilterRef = useRef<BottomSheetModal>(null);
+  // 선택된 색상 필터 상태 관리
   const [selectedColorFilter, setSelectedColorFilter] =
     useState<FolderColorKey | null>(null);
 
-  // isSelected 변경 시 모달 상태 업데이트
-  useEffect(() => {
-    setIsColorModalVisible(isSelected === "color");
-    cardListRef.current?.scrollToOffset({ offset: 0, animated: true });
-  }, [isSelected]);
-
-  const handleCloseColorModal = () => {
-    setIsColorModalVisible(false);
-    setSelectedColorFilter(null);
-    // 토글 버튼을 '전체'로 초기화
-    setIsSelected(workbookTexts.main.toggle[0].id);
+  // 모달 열기
+  const handleOpenColorFilter = () => {
+    colorFilterRef.current?.present();
   };
 
+  // 모달 닫기
+  const handleCloseColorFilter = () => {
+    colorFilterRef.current?.close();
+    /**
+     * 초기화 로직
+     * - 토글 버튼을 '전체'로 초기화
+     * - 색상 필터도 초기화
+     */
+    setSelectedColorFilter(null);
+    setIsToggleSelected(workbookTexts.main.toggle[0].id);
+  };
+
+  // 색상 필터 선택 확인 상태 관리
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  useEffect(() => {
+    if (selectedColorFilter === null) {
+      setIsConfirming(true);
+    } else {
+      setIsConfirming(false);
+    }
+  }, [selectedColorFilter]);
+
+  // 색상 필터 선택 확인 핸들러
+  const handleSelectColorFilter = () => {
+    console.log("선택된 색상 필터:", selectedColorFilter);
+    colorFilterRef.current?.close();
+  };
+
+  const handleBackdropPress = () => {
+    if (selectedColorFilter === null) {
+      setIsToggleSelected(workbookTexts.main.toggle[0].id);
+    } else {
+      // 추후 색상 선택 관련 로직 추가
+      console.log("선택된 색상 필터:", selectedColorFilter);
+    }
+  };
+
+  // isToggleSelected 변경 시 모달 상태 업데이트 함수
+  useEffect(() => {
+    // 토글 변경 시 목록 최상단으로 스크롤
+    cardListRef.current?.scrollToOffset({ offset: 0, animated: true });
+    if (isToggleSelected === "color") {
+      handleOpenColorFilter();
+    } else {
+      // '전체' 선택 시 색상 필터 초기화
+      setSelectedColorFilter(null);
+    }
+  }, [isToggleSelected]);
+
+  useEffect(() => {}, []);
+
   // 카드 클릭 핸들러 (목록 전체 클릭)
-  const handleCardPress = (id: string) => {
-    console.log("카드 클릭:", id);
+  const handleCardPress = (
+    id: string,
+    color: FolderColorKey,
+    title: string,
+    description: string
+  ) => {
+    console.log("카드 클릭:", id, title);
     // 예: navigate(`/folder/${id}`)
+    router.push({
+      pathname: "/workbook/[id]",
+      params: { id, color, title, description }, // [id]에 들어갈 실제 값
+    });
   };
 
   // FlatList 참조
   const cardListRef = useRef<FlatList>(null);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   const renderItem = useCallback(
     ({ item }: { item: (typeof mockWorkbooks)[number] }) => (
@@ -115,7 +183,9 @@ export default function WorkbookScreen() {
         totalCount={item.totalCount}
         colorKey={item.color}
         menuAnchorRef={getAnchorRef(item.id)}
-        handleCardPress={() => handleCardPress(item.id)}
+        handleCardPress={() =>
+          handleCardPress(item.id, item.color, item.title, item.description)
+        }
         handleMenuPress={() => {
           setOpenMenuId((prev) => (prev === item.id ? null : item.id));
         }}
@@ -190,19 +260,7 @@ export default function WorkbookScreen() {
             },
           }}
         />
-        {/* 색상 선택 모달 */}
-        <ColorPickerModal
-          isVisible={isColorModalVisible}
-          onClose={handleCloseColorModal}
-          selectedColor={selectedColorFilter}
-          setSelectedColor={setSelectedColorFilter}
-          isDisabled={!selectedColorFilter}
-          handleApplyColorFilter={() => {
-            console.log("선택된 색상:", selectedColorFilter);
-            setIsColorModalVisible(false);
-            setSelectedColorFilter(null);
-          }}
-        />
+
         {/* 헤더 */}
         <TextHeader label={workbookTexts.main.title} />
         <View className="flex px-6 pb-6 bg-gray-white border-b border-gray-10">
@@ -218,8 +276,8 @@ export default function WorkbookScreen() {
         <View className="flex justify-center items-end p-4">
           <ToggleButton
             options={workbookTexts.main.toggle}
-            selectedId={isSelected}
-            onChange={setIsSelected}
+            selectedId={isToggleSelected}
+            onChange={setIsToggleSelected}
           />
         </View>
 
@@ -236,13 +294,28 @@ export default function WorkbookScreen() {
           renderItem={renderItem}
           ListEmptyComponent={() => {
             return (
-              <View className="flex items-center justify-center mt-20">
+              <View className="flex items-center justify-center mt-36">
                 <Text className="text-body text-gray-60 text-center">
-                  {workbookTexts.main.emptyText}
+                  {searchText.trim() === ""
+                    ? workbookTexts.main.emptyText
+                    : workbookTexts.main.searchEmptyText}
                 </Text>
               </View>
             );
           }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {
+                setRefreshing(true);
+                // 추후 새로고침 로직 구현 (예: 데이터 재요청)
+                setTimeout(() => {
+                  console.log("새로고침 되었습니다.");
+                  setRefreshing(false);
+                }, 1000);
+              }}
+            />
+          }
         />
       </Pressable>
       <PopoverMenu
@@ -270,6 +343,15 @@ export default function WorkbookScreen() {
           <AddWorkbookButton onPress={() => setIsAddVisible(true)} />
         </View>
       </View>
+      <ColorFilterBottomModal
+        ref={colorFilterRef}
+        onClose={handleCloseColorFilter}
+        handleBackdropPress={handleBackdropPress}
+        disabled={isConfirming}
+        onConfirm={handleSelectColorFilter}
+        selectedColor={selectedColorFilter}
+        setSelectedColor={setSelectedColorFilter}
+      />
     </SafeAreaView>
   );
 }

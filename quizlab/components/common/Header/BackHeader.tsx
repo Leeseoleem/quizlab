@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { clsx } from "clsx";
 import HeaderContainer from "./HeaderContainer";
 // 컬러 팔레트
@@ -21,14 +21,16 @@ const BackHeader = ({
 }: BackHeaderProps) => {
   return (
     <HeaderContainer>
-      <View className="flex flex-row gap-4 items-center">
-        <TouchableOpacity activeOpacity={0.8} onPress={onPressBack}>
-          <Feather
-            name="chevron-left"
-            size={size === "normal" ? 24 : 14}
-            color={size === "normal" ? Gray.black : Gray[80]}
-          />
-        </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        className="flex flex-row gap-4 items-center"
+        onPress={onPressBack}
+      >
+        <Feather
+          name="chevron-left"
+          size={size === "normal" ? 24 : 14}
+          color={size === "normal" ? Gray.black : Gray[80]}
+        />
         {label && (
           <Text
             className={clsx(
@@ -39,7 +41,7 @@ const BackHeader = ({
             {label}
           </Text>
         )}
-      </View>
+      </TouchableOpacity>
     </HeaderContainer>
   );
 };

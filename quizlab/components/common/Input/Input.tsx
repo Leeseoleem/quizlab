@@ -1,5 +1,6 @@
 import { View, TextInput, TouchableOpacity } from "react-native";
 import { clsx } from "clsx";
+import type { SizeType_A } from "@/types/common.types";
 
 import { Gray } from "@/constants/colors";
 
@@ -7,6 +8,10 @@ import { Gray } from "@/constants/colors";
 import Octicons from "@expo/vector-icons/Octicons";
 
 export interface CommonInputProps {
+  size?: SizeType_A; // 크기 속성 (기본값: 'default')
+  /**
+   * 입력창 관련 속성
+   */
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
@@ -21,6 +26,7 @@ export interface CommonInputProps {
 }
 
 const CommonInput = ({
+  size = "default",
   placeholder,
   value,
   onChangeText,
@@ -31,24 +37,29 @@ const CommonInput = ({
   isSearchBar = false,
 }: CommonInputProps) => {
   const textInputClass = clsx(
-    "flex w-full h-[52px] rounded-lg pl-4 pr-[44px] bg-gray-white text-caption text-gray-black",
-    isSearchBar ? "pl-[48px]" : "pl-4",
-    value?.length === 0 ? "border border-gray-20 " : "border-2 border-brand"
+    "flex w-full rounded-lg bg-gray-white text-caption text-gray-black",
+    size === "default"
+      ? "h-14 justify-center pl-4 pr-12"
+      : "h-24 text-top px-4",
+    isSearchBar ? "pl-12" : "pl-4",
+    value?.length === 0 ? "border border-gray-20" : "border-2 border-brand"
   );
   return (
-    <View>
+    <View className="flex max-w-full">
       <TextInput
         placeholder={placeholder}
         placeholderTextColor={Gray[30]}
         value={value}
         onChangeText={onChangeText}
+        multiline={size === "default" ? false : true} // 큰 사이즈일 때는 여러 줄 입력 가능
         maxLength={maxLength}
+        textAlignVertical={size === "default" ? "center" : "top"}
         onSubmitEditing={onSubmitEditing}
         secureTextEntry={secureTextEntry}
         className={textInputClass}
       />
       {isSearchBar && (
-        <View className="absolute left-4 top-[16px]">
+        <View className="absolute left-4 top-4">
           <Octicons
             name="search"
             size={20}
@@ -56,9 +67,9 @@ const CommonInput = ({
           />
         </View>
       )}
-      {value && (
+      {value && size === "default" && (
         <TouchableOpacity
-          className="absolute right-4 top-[18px]"
+          className="absolute right-4 top-5"
           onPress={handleClearInput}
           activeOpacity={0.8}
         >

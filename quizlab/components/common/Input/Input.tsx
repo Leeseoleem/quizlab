@@ -38,9 +38,7 @@ const CommonInput = ({
 }: CommonInputProps) => {
   const textInputClass = clsx(
     "flex w-full rounded-lg bg-gray-white text-caption text-gray-black",
-    size === "default"
-      ? "h-14 justify-center pl-4 pr-12"
-      : "h-24 text-top px-4",
+    size === "default" ? "h-14 justify-center pr-12" : "h-24 text-top px-4",
     isSearchBar ? "pl-12" : "pl-4",
     value?.length === 0 ? "border border-gray-20" : "border-2 border-brand"
   );

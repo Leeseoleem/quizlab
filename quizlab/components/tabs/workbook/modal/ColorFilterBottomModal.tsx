@@ -2,8 +2,8 @@ import { forwardRef } from "react";
 import { View } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { BottomModalContainer } from "@/components/bottom-modal/BottomModalContainer";
-import { BottomModalHeader } from "@/components/bottom-modal";
+import { BottomModalContainer } from "@/components/common/bottom-modal/BottomModalContainer";
+import { BottomModalHeader } from "@/components/common/bottom-modal";
 import ColorPickerSection from "../ColorPickerSection";
 import type { ColorPickerProps } from "../ColorPickerSection";
 

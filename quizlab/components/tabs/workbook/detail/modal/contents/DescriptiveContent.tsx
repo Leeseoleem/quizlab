@@ -1,9 +1,33 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import { LabeledCommonInput } from "@/components/common/Input/LabeledInputs";
+import ProblemBodySection from "./ProblemBodySection";
+import type { ProblemBodySectionProps } from "./ProblemBodySection";
 
-export const DescriptiveContent = () => {
+export interface DescriptiveFooterProps {
+  answerValue: string;
+  onChangeAnswermValue: (value: string) => void;
+}
+
+export interface DescriptiveContentProps {
+  body: ProblemBodySectionProps;
+  footer: DescriptiveFooterProps;
+}
+
+export const DescriptiveContent = ({
+  body,
+  footer,
+}: DescriptiveContentProps) => {
   return (
-    <View>
-      <Text className="mt-4 text-gray-700">서술형</Text>
+    <View className="flex p-5 gap-5">
+      <ProblemBodySection {...body} />
+      <LabeledCommonInput
+        label="정답"
+        placeholder="정답을 입력하세요"
+        size="large"
+        value={footer.answerValue}
+        onChangeText={footer.onChangeAnswermValue}
+        handleClearInput={() => footer.onChangeAnswermValue("")}
+      />
     </View>
   );
 };

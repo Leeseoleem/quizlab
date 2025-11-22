@@ -11,11 +11,11 @@ interface AddOptionButtonProp {
 const AddOptionButton = ({ label, onAddOption }: AddOptionButtonProp) => {
   return (
     <Pressable
-      className="flex-row py-3 px-2 items-center justify-center gap-2 rounded-3xl bg-gray-5"
+      className="flex-row py-2 px-3 items-center justify-center gap-2 rounded-3xl bg-brand"
       onPress={onAddOption}
     >
-      <Octicons name="plus" size={14} color={Gray.black} />
-      <Text className="text-caption text-gray-black">{label}</Text>
+      <Octicons name="plus" size={14} color={Gray.white} />
+      <Text className="text-caption text-gray-white">{label}</Text>
     </Pressable>
   );
 };

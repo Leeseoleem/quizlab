@@ -28,16 +28,20 @@ export const AddImageButton = ({
   );
   return (
     <Pressable
-      className={clsx(
-        "w-[72px] h-[72px] bg-gray-10 rounded-lg justify-center items-center"
-      )}
+      className="flex w-[80px] h-[80px] justify-center items-center"
       onPress={onAddImage}
     >
-      <Feather name="image" size={24} color={Gray[40]} />
-      <View className="flex-row gap-[2px]">
-        <Text className={imageCountClass}>{imageCount}</Text>
-        <Text className={textClass}>/</Text>
-        <Text className={textClass}>3</Text>
+      <View
+        className={clsx(
+          "w-[72px] h-[72px] bg-gray-10 rounded-lg justify-center items-center"
+        )}
+      >
+        <Feather name="image" size={24} color={Gray[40]} />
+        <View className="flex-row gap-[2px]">
+          <Text className={imageCountClass}>{imageCount}</Text>
+          <Text className={textClass}>/</Text>
+          <Text className={textClass}>3</Text>
+        </View>
       </View>
     </Pressable>
   );

@@ -6,18 +6,12 @@ import type { ModalHeaderProps } from "./ModalHeader";
 import CommonButton from "../Button/Button";
 
 interface ModalContentsConfig {
-  /**
-   * 모달 컨텐츠 영역
-   */
   visible: boolean;
   onClose: () => void;
   children: React.ReactNode;
 }
 
 interface ModalFooterConfig {
-  /**
-   * 모달 하단(버튼) 영역
-   */
   isConfirmDisabled?: boolean;
   confirmLabel?: string;
   onConfirm?: () => void;
@@ -35,28 +29,28 @@ interface ModalContainerProps {
 const ModalContainer = ({ contents, header, footer }: ModalContainerProps) => {
   return (
     <Modal
-      transparent // 배경 투명화
-      animationType="fade" // 페이드 인/아웃 애니메이션
-      visible={contents.visible} // 모달 표시 여부
-      onRequestClose={contents.onClose} // 안드로이드 백 버튼 처리
+      transparent
+      animationType="fade"
+      visible={contents.visible}
+      onRequestClose={contents.onClose}
     >
-      {/* 키보드까지 고려하는 스크롤 컨테이너 */}
+      {/* 전체 키보드/스크롤 래퍼 */}
       <KeyboardAwareScrollView
-        // 화면 전체를 덮는 컨테이너로 만들기
         className="flex bg-gray-black/50"
         contentContainerStyle={{ flexGrow: 1 }}
         enableOnAndroid
         extraScrollHeight={24}
         keyboardShouldPersistTaps="handled"
+        nestedScrollEnabled
       >
-        {/* 오버레이 영역 */}
-        <Pressable
-          className="flex-1 justify-center items-center p-4"
-          onPress={contents.onClose}
-        >
-          {/* 모달 콘텐츠 영역 */}
-          <Pressable onPress={(e) => e.stopPropagation()}>
-            <View className="flex bg-gray-white rounded-lg overflow-hidden">
+        {/* 전체 화면 오버레이 레이아웃 */}
+        <View className="flex-1 justify-center items-center p-4">
+          {/* 배경(딤드)만 터치하면 닫히도록 분리 */}
+          <Pressable className="absolute inset-0" onPress={contents.onClose} />
+
+          {/* 실제 모달 박스 영역 */}
+          <View className="w-full">
+            <View className="bg-gray-white rounded-lg overflow-hidden">
               {/* 헤더 */}
               <ModalHeader
                 variant={header.variant}
@@ -65,30 +59,28 @@ const ModalContainer = ({ contents, header, footer }: ModalContainerProps) => {
                 onPressClose={header.onPressClose}
               />
 
-              {/* 본문 */}
+              {/* 본문: 여기 안에 ImageUploadContainer 같은 것들이 들어감 */}
               <View className="max-h-[60vh]">{contents.children}</View>
 
               {/* 푸터 */}
-              <View className="flex">
-                {footer && (
-                  <View className="flex w-full p-5 gap-3">
-                    <CommonButton
-                      isDisabled={footer.isConfirmDisabled}
-                      label={footer.confirmLabel ?? "확인"}
-                      onPress={footer.onConfirm}
-                    />
-                    <CommonButton
-                      isDisabled={footer.isCancelDisabled}
-                      variant="secondary"
-                      label={footer.cancelLabel ?? "취소"}
-                      onPress={footer.onCancel}
-                    />
-                  </View>
-                )}
-              </View>
+              {footer && (
+                <View className="w-full p-5 gap-3">
+                  <CommonButton
+                    isDisabled={footer.isConfirmDisabled}
+                    label={footer.confirmLabel ?? "확인"}
+                    onPress={footer.onConfirm}
+                  />
+                  <CommonButton
+                    isDisabled={footer.isCancelDisabled}
+                    variant="secondary"
+                    label={footer.cancelLabel ?? "취소"}
+                    onPress={footer.onCancel}
+                  />
+                </View>
+              )}
             </View>
-          </Pressable>
-        </Pressable>
+          </View>
+        </View>
       </KeyboardAwareScrollView>
     </Modal>
   );

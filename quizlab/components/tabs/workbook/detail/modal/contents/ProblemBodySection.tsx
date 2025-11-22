@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import { workbookTexts } from "@/constants/texts/workbook";
 import { LabeledCommonInput } from "@/components/common/Input/LabeledInputs";
 import ImageUploadContainer from "../../imageUpload/ImageUploadContainer";
 import type { ImageUploadContainerProps } from "../../imageUpload/ImageUploadContainer";
@@ -18,8 +19,10 @@ const ProblemBodySection = ({
     <View className="flex gap-5">
       <ImageUploadContainer {...uploadContents} />
       <LabeledCommonInput
-        label="문제"
-        placeholder="문제를 입력하세요"
+        label={workbookTexts.detail.addProblemModal.problemlInputLabel}
+        placeholder={
+          workbookTexts.detail.addProblemModal.problemlInputPlaceholder
+        }
         size="large"
         value={problemValue}
         onChangeText={onChangeProblemValue}

@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import { workbookTexts } from "@/constants/texts/workbook";
 import { LabeledCommonInput } from "@/components/common/Input/LabeledInputs";
 import ProblemBodySection from "./ProblemBodySection";
 import type { ProblemBodySectionProps } from "./ProblemBodySection";
@@ -21,8 +22,10 @@ export const DescriptiveContent = ({
     <View className="flex p-5 gap-5">
       <ProblemBodySection {...body} />
       <LabeledCommonInput
-        label="정답"
-        placeholder="정답을 입력하세요"
+        label={workbookTexts.detail.addProblemModal.answerInputLabel}
+        placeholder={
+          workbookTexts.detail.addProblemModal.answerInputPlaceholder
+        }
         size="large"
         value={footer.answerValue}
         onChangeText={footer.onChangeAnswermValue}

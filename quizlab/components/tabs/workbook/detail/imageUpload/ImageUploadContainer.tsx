@@ -1,4 +1,5 @@
 import { View, ScrollView } from "react-native";
+import { workbookTexts } from "@/constants/texts/workbook";
 import LabeledInputContainer from "@/components/common/Input/LabeledInputContainer";
 import { AddImageButton, UploadedImageItem } from "./index";
 
@@ -16,7 +17,9 @@ const ImageUploadContainer = ({
   const imageCount = images.length;
 
   return (
-    <LabeledInputContainer label="이미지 추가 (선택 사항)">
+    <LabeledInputContainer
+      label={workbookTexts.detail.addProblemModal.imageUploadLabel}
+    >
       <View className="flex-row w-full gap-2 items-center">
         {/* 이미지 추가 버튼 */}
         <AddImageButton imageCount={imageCount} onAddImage={onAddImage} />

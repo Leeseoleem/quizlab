@@ -6,12 +6,14 @@ import Octicons from "@expo/vector-icons/Octicons";
 const RadioButton = ({
   size = 20,
   isSelected = false,
+  onPress,
 }: {
   size?: number;
   isSelected?: boolean;
+  onPress: () => void;
 }) => {
   return (
-    <Pressable>
+    <Pressable onPress={onPress}>
       {isSelected ? (
         <Octicons
           name="check-circle-fill"

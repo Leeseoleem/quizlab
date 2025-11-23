@@ -17,7 +17,6 @@ const ProblemBodySection = ({
 }: ProblemBodySectionProps) => {
   return (
     <View className="flex gap-5">
-      <ImageUploadContainer {...uploadContents} />
       <LabeledCommonInput
         label={workbookTexts.detail.addProblemModal.problemlInputLabel}
         placeholder={
@@ -28,6 +27,7 @@ const ProblemBodySection = ({
         onChangeText={onChangeProblemValue}
         handleClearInput={() => onChangeProblemValue("")}
       />
+      <ImageUploadContainer {...uploadContents} />
     </View>
   );
 };

@@ -36,16 +36,16 @@ const ImageUploadContainer = ({
     <View className="flex flex-col w-full justify-start gap-1">
       <Pressable
         onPress={toggleImageSection}
-        className="flex-row py-1 items-center justify-between"
+        className="flex-row items-center gap-1"
       >
-        <Text className={toggleLabelClass}>
-          {workbookTexts.detail.addProblemModal.imageUploadLabel}
-        </Text>
         {isImageSectionOpen ? (
           <Octicons name="triangle-down" size={24} color={Gray[60]} />
         ) : (
-          <Octicons name="triangle-left" size={24} color={Gray[60]} />
+          <Octicons name="triangle-right" size={24} color={Gray[60]} />
         )}
+        <Text className={toggleLabelClass}>
+          {workbookTexts.detail.addProblemModal.imageUploadLabel}
+        </Text>
       </Pressable>
       {/* 나타나고/사라질 때 애니메이션 */}
       <AnimatePresence>
@@ -83,7 +83,7 @@ const ImageUploadContainer = ({
                 }}
               >
                 {/* 업로드된 이미지 목록 */}
-                <View className="flex-row gap-2">
+                <View className="flex-row gap-1">
                   {images.map((uri, index) => (
                     <UploadedImageItem
                       key={index}

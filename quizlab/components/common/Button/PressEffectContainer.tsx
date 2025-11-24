@@ -1,8 +1,8 @@
 import { useState, ReactNode } from "react";
-import { Pressable } from "react-native";
+import { Pressable, PressableProps } from "react-native";
 import { MotiView } from "moti";
 
-import type { SizeType } from "@/types/common.types";
+import type { SizeType, AnchorRef } from "@/types/common.types";
 import { Gray } from "@/constants/colors";
 
 // 사이즈 대응표
@@ -15,8 +15,9 @@ const SIZE_PRESETS = {
 export interface PressEffectContainerProps {
   size?: SizeType;
   children: ReactNode; // 하나의 JSX 요소
-  onPress: () => void; // 눌렀을 때 실행되는 콜백
+  onPress: PressableProps["onPress"]; // 눌렀을 때 실행되는 콜백
   pressColor?: string; // 기본 배경색
+  ref?: AnchorRef;
 }
 
 const PressEffectContainer = ({
@@ -24,12 +25,14 @@ const PressEffectContainer = ({
   children,
   onPress,
   pressColor = Gray[10],
+  ref,
 }: PressEffectContainerProps) => {
   const [isPressed, setIsPressed] = useState<boolean>(false);
   const containerSize = SIZE_PRESETS[size];
 
   return (
     <Pressable
+      ref={ref}
       className="flex justify-center items-center rounded-full"
       style={containerSize}
       onPressIn={() => setIsPressed(true)}

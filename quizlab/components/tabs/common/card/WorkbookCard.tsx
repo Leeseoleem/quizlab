@@ -60,7 +60,7 @@ const WorkbookCard = (props: WorkbookCardProps) => {
 
   return (
     <Pressable
-      className="flex-col w-full px-4 py-5 gap-5 bg-white rounded-xl shadow-md"
+      className="flex-col w-full px-4 py-5 gap-5 bg-white rounded-xl shadow-sm"
       onPress={handleCardPress}
     >
       <View

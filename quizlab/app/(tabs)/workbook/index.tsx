@@ -183,7 +183,7 @@ export default function WorkbookScreen() {
         totalCount={item.totalCount}
         colorKey={item.color}
         menuAnchorRef={getAnchorRef(item.id)}
-        handleCardPress={() =>
+        onCardPress={() =>
           handleCardPress(
             item.id,
             item.color,
@@ -192,7 +192,7 @@ export default function WorkbookScreen() {
             item.totalCount
           )
         }
-        handleMenuPress={() => {
+        onMenuPress={() => {
           setOpenMenuId((prev) => (prev === item.id ? null : item.id));
         }}
       />
@@ -215,13 +215,13 @@ export default function WorkbookScreen() {
     {
       type: "default",
       name: "pencil",
-      label: workbookTexts.main.popover.edit,
+      label: workbookTexts.popover.edit,
       onPressItem: () => console.log("수정하기"),
     },
     {
       type: "danger",
       name: "trash",
-      label: workbookTexts.main.popover.delete,
+      label: workbookTexts.popover.delete,
       onPressItem: () => console.log("삭제하기"),
     },
   ];

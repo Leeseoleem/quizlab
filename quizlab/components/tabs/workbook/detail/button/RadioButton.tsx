@@ -4,10 +4,12 @@ import { BaseColors } from "@/constants/colors";
 import Octicons from "@expo/vector-icons/Octicons";
 
 const RadioButton = ({
+  color = BaseColors.brand,
   size = 20,
   isSelected = false,
   onPress,
 }: {
+  color?: string;
   size?: number;
   isSelected?: boolean;
   onPress: () => void;
@@ -15,13 +17,9 @@ const RadioButton = ({
   return (
     <Pressable onPress={onPress}>
       {isSelected ? (
-        <Octicons
-          name="check-circle-fill"
-          size={size}
-          color={BaseColors.brand}
-        />
+        <Octicons name="check-circle-fill" size={size} color={color} />
       ) : (
-        <Octicons name="circle" size={size} color={BaseColors.brand} />
+        <Octicons name="circle" size={size} color={color} />
       )}
     </Pressable>
   );

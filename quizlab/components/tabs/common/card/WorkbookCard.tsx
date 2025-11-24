@@ -15,8 +15,8 @@ import { Gray } from "@/constants/colors";
 // 공통 베이스
 interface WorkbookBase extends FolderLabelProps {
   title: string; // 카드 제목
-  handleCardPress: () => void; // 카드 전체 클릭 핸들러
-  handleMenuPress: () => void; // 메뉴 버튼 클릭 핸들러
+  onCardPress: () => void; // 카드 전체 클릭 핸들러
+  onMenuPress: () => void; // 메뉴 버튼 클릭 핸들러
   totalCount: number; // 항목 개수
   menuAnchorRef: AnchorRef;
 }
@@ -52,8 +52,8 @@ const WorkbookCard = (props: WorkbookCardProps) => {
     description,
     mode,
     totalCount,
-    handleCardPress,
-    handleMenuPress,
+    onCardPress,
+    onMenuPress,
     menuAnchorRef,
     ...FolderLabelProps
   } = props;
@@ -61,7 +61,7 @@ const WorkbookCard = (props: WorkbookCardProps) => {
   return (
     <Pressable
       className="flex-col w-full px-4 py-5 gap-5 bg-white rounded-xl shadow-sm"
-      onPress={handleCardPress}
+      onPress={onCardPress}
     >
       <View
         collapsable={false}
@@ -73,7 +73,7 @@ const WorkbookCard = (props: WorkbookCardProps) => {
           onPress={(e) => {
             // 이벤트 전파 중단: 부모 onPress가 실행되지 않음
             e.stopPropagation();
-            handleMenuPress();
+            onMenuPress();
           }}
         >
           <Entypo name="dots-three-horizontal" size={20} color={Gray[40]} />

@@ -234,9 +234,9 @@ export default function WorkbookDetailScreen() {
   /**
    * 문제 수정 여부 확인 변수
    * null: 문제 추가
-   * index: 특정 index의 문제 수정
+   * editingProblemId: 현재 선택된 문제집 id의 문제 수정
    */
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingProblemId, setEditingProblemId] = useState<string | null>(null);
 
   // 모달 초기화 함수
   const resetProblemForm = () => {
@@ -332,12 +332,12 @@ export default function WorkbookDetailScreen() {
     // 수정 모드가 아닐 경우 return
     if (openMenuId === null) return;
 
-    const selectedIndex = Number(openMenuId);
-    const target = problemsByFolder[selectedIndex];
+    const target = problemsByFolder.find((p) => p.id === openMenuId);
+    console.log(target);
 
     if (!target) return;
 
-    setEditingIndex(selectedIndex); // 인덱스 저장- 수정 모드
+    setEditingProblemId(target.id); // 인덱스 저장- 수정 모드
     fillProblemFormForEdit(target); // 수정할 문제 요소 저장
     setOpenMenuId(null);
     setIsAddProblemModalVisible(true); // 모달 열기
@@ -492,10 +492,10 @@ export default function WorkbookDetailScreen() {
     <SafeAreaView className="flex-1">
       {/* 문제 추가 모달 */}
       <AddProblemModal
-        isEditingMode={editingIndex !== null}
+        isEditingMode={editingProblemId !== null}
         isVisible={isAddProblemModalVisible}
         onClose={() => {
-          setEditingIndex(null); // 수정 모드 초기화
+          setEditingProblemId(null); // 수정 모드 초기화
           setIsAddProblemModalVisible(false);
         }}
         handleAddProblem={() => {
@@ -606,17 +606,16 @@ export default function WorkbookDetailScreen() {
         ItemSeparatorComponent={() => <View className="h-4" />}
         renderItem={({ item, index }) => (
           <ProblemCard
-            menuAnchorRef={getAnchorRef(index.toString())}
+            menuAnchorRef={getAnchorRef(item.id)}
             showAnswer={showAnswer}
             onMenuPress={() => {
-              setOpenMenuId((prev) =>
-                prev === index.toString() ? null : index.toString()
-              );
+              setOpenMenuId(item.id);
             }}
             problem={
               item.type === "descriptive"
                 ? {
                     folderId: item.folderId,
+                    id: item.id,
                     question: item.question,
                     imageUrl: item.imageUrl,
                     type: "descriptive",
@@ -624,6 +623,7 @@ export default function WorkbookDetailScreen() {
                   }
                 : {
                     folderId: item.folderId,
+                    id: item.id,
                     question: item.question,
                     imageUrl: item.imageUrl,
                     type: "choice",

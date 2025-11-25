@@ -208,7 +208,9 @@ export default function WorkbookScreen() {
   /**
    * 문제집 수정 관련 로직
    */
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingWorkbookId, setEditingWorkbookId] = useState<string | null>(
+    null
+  );
 
   // 수정 내용 채우기 함수
   const fillWorkbookFormForEdit = (workbook: Workbook) => {
@@ -222,15 +224,11 @@ export default function WorkbookScreen() {
     // 수정 모드가 아닐 경우 return
     if (openMenuId === null) return;
 
-    const selectedIndex = Number(openMenuId);
-    const filter: Workbook[] = mockWorkbooks.filter(
-      (item) => item.id === openMenuId
-    );
-    const target = filter[0];
+    const target = mockWorkbooks.find((item) => item.id === openMenuId);
 
     if (!target) return;
 
-    setEditingIndex(selectedIndex); // 인덱스 저장- 수정 모드
+    setEditingWorkbookId(target.id); // 인덱스 저장- 수정 모드
     fillWorkbookFormForEdit(target);
     setOpenMenuId(null);
     setIsAddVisible(true); // 모달 열기
@@ -259,7 +257,7 @@ export default function WorkbookScreen() {
     setNewDescription("");
     setIsSelectedColor(null);
     // 수정 모드 초기화
-    setEditingIndex(null);
+    setEditingWorkbookId(null);
   };
 
   // 모달 닫기
@@ -277,7 +275,7 @@ export default function WorkbookScreen() {
       <Pressable className="flex-1" onPress={Keyboard.dismiss}>
         {/* 문제집 추가 모달 */}
         <AddWorkbookModal
-          isEditingMode={editingIndex !== null}
+          isEditingMode={editingWorkbookId !== null}
           step={step}
           visible={isAddVisible}
           info={{

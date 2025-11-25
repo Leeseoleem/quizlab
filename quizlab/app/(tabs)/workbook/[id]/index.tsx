@@ -514,7 +514,7 @@ export default function WorkbookDetailScreen() {
         }}
         descriptionContents={{
           answerValue: answerValue,
-          onChangeAnswermValue: setAnswerValue,
+          onChangeAnswerValue: setAnswerValue,
         }}
         choiceContents={{
           onAddOption: handleAddOption,

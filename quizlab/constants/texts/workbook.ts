@@ -37,6 +37,7 @@ export const workbookTexts = {
     emptyText: "아직 등록된 문제가 없습니다.\n새로운 문제를 추가해보세요.",
     addProblemModal: {
       headerLabel: "문제 추가하기",
+      editHeaderLabel: "문제 수정하기",
       imageUploadLabel: "이미지 추가 (선택 사항)",
       problemInputLabel: "문제",
       problemInputPlaceholder: "문제를 입력하세요",
@@ -45,6 +46,7 @@ export const workbookTexts = {
       optionInputPlaceholder: "내용을 입력하세요",
       choiceOptionLabel: "선택지",
       addButtonLabel: "추가하기",
+      editButtonLabel: "수정하기",
       cancelButtonLabel: "취소",
       addOptionButtonLabel: "선택지 추가",
       toastMessage: {

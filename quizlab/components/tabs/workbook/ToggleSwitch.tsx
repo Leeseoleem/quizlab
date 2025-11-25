@@ -70,6 +70,9 @@ const ToggleSwitch = ({
       activeOpacity={0.8}
       onPress={handlePress}
       disabled={disabled}
+      accessibilityRole="switch"
+      accessibilityState={{ checked: value, disabled }}
+      accessibilityLabel={label || "토글 스위치"}
     >
       <View
         className={clsx(

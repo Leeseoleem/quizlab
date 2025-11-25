@@ -15,7 +15,6 @@ interface descriptivePanelProp extends basePanelProps {
 
 interface choicePanelProps extends basePanelProps {
   type: "choice";
-  key: string;
   text: string;
   isCorrect: boolean;
 }

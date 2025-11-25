@@ -219,7 +219,6 @@ export default function WorkbookScreen() {
 
   // 문제 수정 함수
   const handlePressEdit = () => {
-    console.log("수정 모드: ", openMenuId);
     // 수정 모드가 아닐 경우 return
     if (openMenuId === null) return;
 
@@ -228,8 +227,6 @@ export default function WorkbookScreen() {
       (item) => item.id === openMenuId
     );
     const target = filter[0];
-
-    console.log(target);
 
     if (!target) return;
 

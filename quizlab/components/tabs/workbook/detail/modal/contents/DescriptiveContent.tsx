@@ -6,7 +6,7 @@ import type { ProblemBodySectionProps } from "./ProblemBodySection";
 
 export interface DescriptiveFooterProps {
   answerValue: string;
-  onChangeAnswermValue: (value: string) => void;
+  onChangeAnswerValue: (value: string) => void;
 }
 
 export interface DescriptiveContentProps {
@@ -28,8 +28,8 @@ export const DescriptiveContent = ({
         }
         size="large"
         value={footer.answerValue}
-        onChangeText={footer.onChangeAnswermValue}
-        handleClearInput={() => footer.onChangeAnswermValue("")}
+        onChangeText={footer.onChangeAnswerValue}
+        handleClearInput={() => footer.onChangeAnswerValue("")}
       />
     </View>
   );

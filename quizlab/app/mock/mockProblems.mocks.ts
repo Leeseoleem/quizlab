@@ -21,14 +21,14 @@ export const mockProblems: ProblemInput[] = [
   {
     type: "descriptive",
     folderId: "wkb_001",
-    question: "React에서 상태를 관리하는 기본 Hook은 무엇인가?",
-    answer: "useState",
+    question: "React에서 부수 효과를 처리하는 Hook은 무엇인가?",
+    answer: "useEffect",
   },
   {
     type: "descriptive",
     folderId: "wkb_001",
-    question: "React에서 상태를 관리하는 기본 Hook은 무엇인가?",
-    answer: "useState",
+    question: "React에서 메모이제이션을 위한 Hook은 무엇인가?",
+    answer: "useMemo",
   },
 
   // wkb_002

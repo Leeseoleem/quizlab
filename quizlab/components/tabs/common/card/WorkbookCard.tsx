@@ -1,27 +1,24 @@
-import { useState } from "react";
-import { View, Text, TouchableOpacity, Pressable } from "react-native";
-import { clsx } from "clsx";
+import { View, Text, Pressable } from "react-native";
 
 import { FolderLabel } from "../items/FolderLabel";
 import { ModeLabel } from "../label/ModeItems";
 import { CountItems } from "../items/CountItems";
+import PressEffectContainer from "@/components/common/Button/PressEffectContainer";
 
 import type { FolderLabelProps } from "../items/FolderLabel";
-import type { SolvedMode } from "@/types/common.types";
+import type { AnchorRef } from "@/types/common.types";
+import type { SolvedModeType } from "@/types/workbook/problem.types";
 
 import Entypo from "@expo/vector-icons/Entypo";
 import { Gray } from "@/constants/colors";
 
-// 부모가 내려줄 앵커 ref 타입(객체/콜백 둘 다 수용)
-type MenuAnchorRef = React.RefObject<View | null>;
-
 // 공통 베이스
 interface WorkbookBase extends FolderLabelProps {
   title: string; // 카드 제목
-  handleCardPress: () => void; // 카드 전체 클릭 핸들러
-  handleMenuPress: () => void; // 메뉴 버튼 클릭 핸들러
+  onCardPress: () => void; // 카드 전체 클릭 핸들러
+  onMenuPress: () => void; // 메뉴 버튼 클릭 핸들러
   totalCount: number; // 항목 개수
-  menuAnchorRef: MenuAnchorRef;
+  menuAnchorRef: AnchorRef;
 }
 
 // 기본 문제집 카드 속성
@@ -37,7 +34,7 @@ interface WorkbookDefault {
 // 기록 탭 전용 문제집 카드 속성
 interface WorkbookRecord {
   variant: "record";
-  mode: SolvedMode;
+  mode: SolvedModeType;
   correctCount: number;
   inCorrectCount: number;
   // default 전용 필드 제거
@@ -55,42 +52,32 @@ const WorkbookCard = (props: WorkbookCardProps) => {
     description,
     mode,
     totalCount,
-    handleCardPress,
-    handleMenuPress,
+    onCardPress,
+    onMenuPress,
     menuAnchorRef,
     ...FolderLabelProps
   } = props;
 
-  const [onPressIn, setOnPressIn] = useState(false);
-
   return (
     <Pressable
-      className="flex-col w-full px-4 py-5 gap-5 bg-white rounded-xl shadow-md"
-      onPress={handleCardPress}
+      className="flex-col w-full px-4 py-5 gap-5 bg-white rounded-xl shadow-sm"
+      onPress={onCardPress}
     >
       <View
         collapsable={false}
         className="flex flex-row justify-between items-center"
       >
         <FolderLabel {...FolderLabelProps} />
-        <TouchableOpacity
+        <PressEffectContainer
           ref={menuAnchorRef}
-          className={clsx("p-2 rounded-full", onPressIn && "bg-gray-10")}
-          onPressIn={() => {
-            setOnPressIn(true);
-          }}
-          onPressOut={() => {
-            setOnPressIn(false);
-          }}
           onPress={(e) => {
             // 이벤트 전파 중단: 부모 onPress가 실행되지 않음
             e.stopPropagation();
-            handleMenuPress();
+            onMenuPress();
           }}
-          activeOpacity={0.8}
         >
-          <Entypo name="dots-three-horizontal" size={20} color={Gray[30]} />
-        </TouchableOpacity>
+          <Entypo name="dots-three-horizontal" size={20} color={Gray[40]} />
+        </PressEffectContainer>
       </View>
       <View className="flex-col gap-2">
         {variant === "record" && <ModeLabel mode={mode!} />}

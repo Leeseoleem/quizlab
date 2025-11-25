@@ -15,7 +15,7 @@ const LabeledInputContainer = ({
   return (
     <View className="flex flex-col w-full justify-start gap-1">
       <View className="flex flex-row gap-1 justify-start items-start">
-        <Text className="text-description text-gray-80">{label}</Text>
+        <Text className="text-caption text-gray-80">{label}</Text>
         {isRequired && <Text className="text-description text-danger">*</Text>}
       </View>
       {children}

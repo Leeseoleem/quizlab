@@ -47,7 +47,7 @@ const ToggleButton = ({ options, selectedId, onChange }: ToggleButtonProps) => {
               height: active.height,
             }}
             transition={{ type: "timing", duration: 200 }}
-            className="absolute top-1 left-0 bg-white rounded-full"
+            className="absolute top-1 left-0 bg-white rounded-full shadow"
           />
         )}
         {options.map((option, index) => {

@@ -30,6 +30,7 @@ import ToggleButton from "@/components/tabs/workbook/ToggleButton";
 
 import AddWorkbookButton from "@/components/tabs/workbook/AddWorkbookButton";
 import ScrollToTopButton from "@/components/common/Button/ScrollToTopButton";
+import { Workbook } from "@/types/workbook/workbook.types";
 
 export default function WorkbookScreen() {
   // 라우터 객체 가져오기
@@ -62,13 +63,6 @@ export default function WorkbookScreen() {
   const [isSelectedColor, setIsSelectedColor] = useState<FolderColorKey | null>(
     null
   );
-
-  const handleCloseAddModal = () => {
-    setIsAddVisible(false);
-    setNewTitle("");
-    setNewDescription("");
-    setIsSelectedColor(null);
-  };
 
   const onNextStep = () => {
     setStep("color");
@@ -159,13 +153,13 @@ export default function WorkbookScreen() {
     id: string,
     color: FolderColorKey,
     title: string,
-    description: string
+    description: string,
+    totalCount: number
   ) => {
-    console.log("카드 클릭:", id, title);
     // 예: navigate(`/folder/${id}`)
     router.push({
       pathname: "/workbook/[id]",
-      params: { id, color, title, description }, // [id]에 들어갈 실제 값
+      params: { id, color, title, description, totalCount }, // [id]에 들어갈 실제 값
     });
   };
 
@@ -183,10 +177,16 @@ export default function WorkbookScreen() {
         totalCount={item.totalCount}
         colorKey={item.color}
         menuAnchorRef={getAnchorRef(item.id)}
-        handleCardPress={() =>
-          handleCardPress(item.id, item.color, item.title, item.description)
+        onCardPress={() =>
+          handleCardPress(
+            item.id,
+            item.color,
+            item.title,
+            item.description,
+            item.totalCount
+          )
         }
-        handleMenuPress={() => {
+        onMenuPress={() => {
           setOpenMenuId((prev) => (prev === item.id ? null : item.id));
         }}
       />
@@ -205,20 +205,66 @@ export default function WorkbookScreen() {
     return anchorRefs.current[id];
   };
 
+  /**
+   * 문제집 수정 관련 로직
+   */
+  const [editingWorkbookId, setEditingWorkbookId] = useState<string | null>(
+    null
+  );
+
+  // 수정 내용 채우기 함수
+  const fillWorkbookFormForEdit = (workbook: Workbook) => {
+    setNewTitle(workbook.title);
+    setNewDescription(workbook.description ?? "");
+    setIsSelectedColor(workbook.color);
+  };
+
+  // 문제 수정 함수
+  const handlePressEdit = () => {
+    // 수정 모드가 아닐 경우 return
+    if (openMenuId === null) return;
+
+    const target = mockWorkbooks.find((item) => item.id === openMenuId);
+
+    if (!target) return;
+
+    setEditingWorkbookId(target.id); // 인덱스 저장- 수정 모드
+    fillWorkbookFormForEdit(target);
+    setOpenMenuId(null);
+    setIsAddVisible(true); // 모달 열기
+  };
+
   const menuList: MenuListItemProps[] = [
     {
       type: "default",
       name: "pencil",
-      label: workbookTexts.main.popover.edit,
-      onPressItem: () => console.log("수정하기"),
+      label: workbookTexts.popover.edit,
+      onPressItem: handlePressEdit,
     },
     {
       type: "danger",
       name: "trash",
-      label: workbookTexts.main.popover.delete,
+      label: workbookTexts.popover.delete,
       onPressItem: () => console.log("삭제하기"),
     },
   ];
+
+  // 문제집 모달 form 초기화 함수
+  const resetWorkbookForm = () => {
+    setStep("info");
+    //form 비우기
+    setNewTitle("");
+    setNewDescription("");
+    setIsSelectedColor(null);
+    // 수정 모드 초기화
+    setEditingWorkbookId(null);
+  };
+
+  // 모달 닫기
+  const handleCloseAddModal = () => {
+    setIsAddVisible(false);
+    resetWorkbookForm();
+  };
 
   const popoverVisible = openMenuId !== null;
   const popoverRef = popoverVisible ? getAnchorRef(openMenuId) : undefined;
@@ -229,6 +275,7 @@ export default function WorkbookScreen() {
       <Pressable className="flex-1" onPress={Keyboard.dismiss}>
         {/* 문제집 추가 모달 */}
         <AddWorkbookModal
+          isEditingMode={editingWorkbookId !== null}
           step={step}
           visible={isAddVisible}
           info={{
@@ -256,7 +303,6 @@ export default function WorkbookScreen() {
               });
               // 문제집 추가 로직 구현
               handleCloseAddModal();
-              setStep("info");
             },
           }}
         />

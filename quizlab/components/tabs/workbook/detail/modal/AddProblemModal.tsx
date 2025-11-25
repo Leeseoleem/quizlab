@@ -15,6 +15,7 @@ import type { TabProps } from "@/components/common/Tab/tabTypes";
 import type { ProblemType } from "@/types/workbook/problem.types";
 
 interface AddProblemModalProps {
+  isEditingMode?: boolean;
   isVisible: boolean;
   onClose: () => void;
   handleAddProblem: () => void;
@@ -25,6 +26,7 @@ interface AddProblemModalProps {
   choiceContents: ChoiceFooterProps;
 }
 const AddProblemModal = ({
+  isEditingMode = false,
   isVisible,
   onClose,
   handleAddProblem,
@@ -71,12 +73,16 @@ const AddProblemModal = ({
       }}
       header={{
         variant: "close",
-        label: workbookTexts.detail.addProblemModal.headerLabel,
+        label: isEditingMode
+          ? workbookTexts.detail.addProblemModal.editHeaderLabel
+          : workbookTexts.detail.addProblemModal.headerLabel,
         onPressClose: onClose,
       }}
       footer={{
         isConfirmDisabled: isDisabled,
-        confirmLabel: workbookTexts.detail.addProblemModal.addButtonLabel,
+        confirmLabel: isEditingMode
+          ? workbookTexts.detail.addProblemModal.editButtonLabel
+          : workbookTexts.detail.addProblemModal.addButtonLabel,
         onConfirm: handleAddProblem,
         cancelLabel: workbookTexts.detail.addProblemModal.cancelButtonLabel,
         onCancel: onClose,

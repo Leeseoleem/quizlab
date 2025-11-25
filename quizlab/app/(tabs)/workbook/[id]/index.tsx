@@ -256,7 +256,7 @@ export default function WorkbookDetailScreen() {
   /**
    * 문제 풀기 모달 로직
    */
-  const [isSolvedModalVisible, setIsSolvedModalVisivle] =
+  const [isSolvedModalVisible, setIsSolvedModalVisible] =
     useState<boolean>(false);
 
   const [selectedMode, setSelectedMode] = useState<SolvedModeType | null>(null);
@@ -532,7 +532,7 @@ export default function WorkbookDetailScreen() {
       <StartSolveModal
         isVisible={isSolvedModalVisible}
         onClose={() => {
-          setIsSolvedModalVisivle(false);
+          setIsSolvedModalVisible(false);
           setSelectedMode(null);
           setTimeLimit("30");
         }}
@@ -577,11 +577,11 @@ export default function WorkbookDetailScreen() {
           }}
           actionBar={{
             totalCount: totalCount,
-            handelAddProblemPress: () => {
+            handleAddProblemPress: () => {
               resetProblemForm(); // 추가 모드 초기화
               setIsAddProblemModalVisible(true); // 모달 열기
             },
-            handelSolvePress: () => setIsSolvedModalVisivle(true),
+            handleSolvePress: () => setIsSolvedModalVisible(true),
           }}
         />
       </View>

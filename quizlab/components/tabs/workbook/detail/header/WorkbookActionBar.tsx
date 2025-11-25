@@ -8,14 +8,14 @@ import { Gray } from "@/constants/colors";
 
 export interface WorkbookActionBarProps {
   totalCount: number;
-  handelAddProblemPress: () => void;
-  handelSolvePress: () => void;
+  handleAddProblemPress: () => void;
+  handleSolvePress: () => void;
 }
 
 const WorkbookActionBar = ({
   totalCount,
-  handelAddProblemPress,
-  handelSolvePress,
+  handleAddProblemPress,
+  handleSolvePress,
 }: WorkbookActionBarProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -30,13 +30,13 @@ const WorkbookActionBar = ({
           variant="secondary"
           label="문제 추가"
           childrenLeft={<Octicons name="plus" size={16} color={Gray[80]} />}
-          onPress={handelAddProblemPress}
+          onPress={handleAddProblemPress}
         />
         <ShortButton
           isDisabled={isDisabled}
           label="문제 풀기"
           childrenLeft={<Feather name="play" size={16} color={Gray.white} />}
-          onPress={handelSolvePress}
+          onPress={handleSolvePress}
         />
       </View>
     </View>

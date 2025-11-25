@@ -1,5 +1,4 @@
-import { Pressable, View, Text } from "react-native";
-import { clsx } from "clsx";
+import { View, Text } from "react-native";
 
 import PressEffectContainer from "@/components/common/Button/PressEffectContainer";
 import AnswerPanel from "../list/AnswerPanel";

@@ -38,7 +38,7 @@ export const workbookTexts = {
     addProblemModal: {
       headerLabel: "문제 추가하기",
       imageUploadLabel: "이미지 추가 (선택 사항)",
-      problemlInputLabel: "문제",
+      problemInputLabel: "문제",
       problemlInputPlaceholder: "문제를 입력하세요",
       answerInputLabel: "정답",
       answerInputPlaceholder: "정답을 입력하세요",
@@ -46,7 +46,7 @@ export const workbookTexts = {
       choiceOptionLabel: "선택지",
       addButtonLabel: "추가하기",
       cancelButtonLabel: "취소",
-      addOptionButtonLable: "선택지 추가",
+      addOptionButtonLabel: "선택지 추가",
       toastMessage: {
         maxLength: "이미지는 최대 3장까지 선택할 수 있어요",
         permissionRequest: "이미지를 추가하려면 사진 접근 권한이 필요해요",

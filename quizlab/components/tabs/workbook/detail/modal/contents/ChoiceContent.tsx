@@ -25,7 +25,7 @@ export const ChoiceContent = ({ body, footer }: ChoiceContentProps) => {
             {workbookTexts.detail.addProblemModal.choiceOptionLabel}
           </Text>
           <AddOptionButton
-            label={workbookTexts.detail.addProblemModal.addOptionButtonLable}
+            label={workbookTexts.detail.addProblemModal.addOptionButtonLabel}
             onAddOption={footer.onAddOption}
           />
         </View>

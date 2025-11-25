@@ -18,7 +18,7 @@ const ProblemBodySection = ({
   return (
     <View className="flex gap-5">
       <LabeledCommonInput
-        label={workbookTexts.detail.addProblemModal.problemlInputLabel}
+        label={workbookTexts.detail.addProblemModal.problemInputLabel}
         placeholder={
           workbookTexts.detail.addProblemModal.problemlInputPlaceholder
         }

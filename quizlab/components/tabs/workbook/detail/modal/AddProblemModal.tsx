@@ -57,7 +57,7 @@ const AddProblemModal = ({
               </MotiView>
             ) : (
               <MotiView
-                key="chpice"
+                key="choice"
                 from={{ opacity: 0.5, translateX: -40 }}
                 animate={{ opacity: 1, translateX: 0 }}
                 exit={{ opacity: 0.5, translateX: 40 }}

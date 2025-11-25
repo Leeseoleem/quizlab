@@ -30,6 +30,7 @@ import ToggleButton from "@/components/tabs/workbook/ToggleButton";
 
 import AddWorkbookButton from "@/components/tabs/workbook/AddWorkbookButton";
 import ScrollToTopButton from "@/components/common/Button/ScrollToTopButton";
+import { Workbook } from "@/types/workbook/workbook.types";
 
 export default function WorkbookScreen() {
   // 라우터 객체 가져오기
@@ -62,13 +63,6 @@ export default function WorkbookScreen() {
   const [isSelectedColor, setIsSelectedColor] = useState<FolderColorKey | null>(
     null
   );
-
-  const handleCloseAddModal = () => {
-    setIsAddVisible(false);
-    setNewTitle("");
-    setNewDescription("");
-    setIsSelectedColor(null);
-  };
 
   const onNextStep = () => {
     setStep("color");
@@ -211,12 +205,46 @@ export default function WorkbookScreen() {
     return anchorRefs.current[id];
   };
 
+  /**
+   * 문제집 수정 관련 로직
+   */
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  // 수정 내용 채우기 함수
+  const fillWorkbookFormForEdit = (workbook: Workbook) => {
+    setNewTitle(workbook.title);
+    setNewDescription(workbook.description ?? "");
+    setIsSelectedColor(workbook.color);
+  };
+
+  // 문제 수정 함수
+  const handlePressEdit = () => {
+    console.log("수정 모드: ", openMenuId);
+    // 수정 모드가 아닐 경우 return
+    if (openMenuId === null) return;
+
+    const selectedIndex = Number(openMenuId);
+    const filter: Workbook[] = mockWorkbooks.filter(
+      (item) => item.id === openMenuId
+    );
+    const target = filter[0];
+
+    console.log(target);
+
+    if (!target) return;
+
+    setEditingIndex(selectedIndex); // 인덱스 저장- 수정 모드
+    fillWorkbookFormForEdit(target);
+    setOpenMenuId(null);
+    setIsAddVisible(true); // 모달 열기
+  };
+
   const menuList: MenuListItemProps[] = [
     {
       type: "default",
       name: "pencil",
       label: workbookTexts.popover.edit,
-      onPressItem: () => console.log("수정하기"),
+      onPressItem: handlePressEdit,
     },
     {
       type: "danger",
@@ -225,6 +253,23 @@ export default function WorkbookScreen() {
       onPressItem: () => console.log("삭제하기"),
     },
   ];
+
+  // 문제집 모달 form 초기화 함수
+  const resetWorkbookForm = () => {
+    setStep("info");
+    //form 비우기
+    setNewTitle("");
+    setNewDescription("");
+    setIsSelectedColor(null);
+    // 수정 모드 초기화
+    setEditingIndex(null);
+  };
+
+  // 모달 닫기
+  const handleCloseAddModal = () => {
+    setIsAddVisible(false);
+    resetWorkbookForm();
+  };
 
   const popoverVisible = openMenuId !== null;
   const popoverRef = popoverVisible ? getAnchorRef(openMenuId) : undefined;
@@ -235,6 +280,7 @@ export default function WorkbookScreen() {
       <Pressable className="flex-1" onPress={Keyboard.dismiss}>
         {/* 문제집 추가 모달 */}
         <AddWorkbookModal
+          isEditingMode={editingIndex !== null}
           step={step}
           visible={isAddVisible}
           info={{
@@ -262,7 +308,6 @@ export default function WorkbookScreen() {
               });
               // 문제집 추가 로직 구현
               handleCloseAddModal();
-              setStep("info");
             },
           }}
         />

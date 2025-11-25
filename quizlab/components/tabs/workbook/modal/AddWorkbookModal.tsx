@@ -28,6 +28,7 @@ interface ColorStepProps {
 }
 
 interface AddWorkbookModalProps {
+  isEditingMode?: boolean;
   step?: Step;
   visible: boolean;
   info: InfoStepProps;
@@ -35,6 +36,7 @@ interface AddWorkbookModalProps {
 }
 
 const AddWorkbookModal = ({
+  isEditingMode = false,
   step = "info",
   visible,
   info,
@@ -106,7 +108,9 @@ const AddWorkbookModal = ({
       }}
       header={{
         variant: step === "info" ? "close" : "back",
-        label: workbookTexts.main.addWorkbookModal.headerLabel,
+        label: isEditingMode
+          ? workbookTexts.main.addWorkbookModal.editHeaderLabel
+          : workbookTexts.main.addWorkbookModal.headerLabel,
         onPressClose: info.onClose,
         onPressBack: color.onPrevStep,
       }}
@@ -116,7 +120,9 @@ const AddWorkbookModal = ({
         confirmLabel:
           step === "info"
             ? workbookTexts.main.addWorkbookModal.nextButtonLabel
-            : workbookTexts.main.addWorkbookModal.addButtonLabel,
+            : isEditingMode
+              ? workbookTexts.main.addWorkbookModal.editButtonLabel
+              : workbookTexts.main.addWorkbookModal.addButtonLabel,
         onConfirm: step === "info" ? info.onNextStep : color.handleAddWorkbook,
         cancelLabel: workbookTexts.main.addWorkbookModal.cancelButtonLabel,
         onCancel: step === "info" ? info.onClose : color.onPrevStep,

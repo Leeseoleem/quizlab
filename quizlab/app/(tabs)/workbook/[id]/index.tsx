@@ -47,6 +47,7 @@ export default function WorkbookDetailScreen() {
    */
   const [isAddProblemModalVisible, setIsAddProblemModalVisible] =
     useState<boolean>(false);
+  // 모달 탭 선택 타입
   const [problemType, setProblemType] = useState<ProblemType>("descriptive");
 
   const tabBarProps: TabProps<ProblemType> = {
@@ -203,24 +204,7 @@ export default function WorkbookDetailScreen() {
     setCorrectIndex(index);
   };
 
-  // 문제 추가 모달 실행 시 초기화
-  useEffect(() => {
-    if (!isAddProblemModalVisible) return;
-    // 사진 초기화
-    setRawUri(null);
-    setImages([]);
-    // input 영역 초기화
-    setProblemValue("");
-    setAnswerValue("");
-    // 선택 옵션 초기화
-    setCorrectIndex(null);
-    setOptionValues(["", ""]);
-    // 탭: 서술형 고정
-    setProblemType("descriptive");
-    console.log("초기화 완료");
-  }, [isAddProblemModalVisible]);
-
-  // 문제 추가 모달  submit 버튼 비활성화 여부 판단 함수
+  // 문제 추가 모달 submit 활성화 여부 판단 함수
   const isAddProblemFormEmpty = () => {
     const noProblem = problemValue.trim() === "";
 
@@ -245,6 +229,28 @@ export default function WorkbookDetailScreen() {
       // 모든 조건 통과 → 활성화 가능
       return false;
     }
+  };
+
+  /**
+   * 문제 수정 여부 확인 변수
+   * null: 문제 추가
+   * index: 특정 index의 문제 수정
+   */
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  // 모달 초기화 함수
+  const resetProblemForm = () => {
+    // 사진 초기화
+    setRawUri(null);
+    setImages([]);
+    // input 영역 초기화
+    setProblemValue("");
+    setAnswerValue("");
+    // 선택 옵션 초기화
+    setCorrectIndex(null);
+    setOptionValues(["", ""]);
+    // 탭: 서술형 고정
+    setProblemType("descriptive");
   };
 
   /**
@@ -292,12 +298,57 @@ export default function WorkbookDetailScreen() {
     return anchorRefs.current[id];
   };
 
+  /**
+   * 수정하기 메뉴 관리
+   * 기존의 문제 추가 모달 => 수정하기 모달
+   */
+  const fillProblemFormForEdit = (problem: ProblemInput) => {
+    resetProblemForm();
+    // 1. 공통 영역
+    setProblemValue(problem.question);
+    // imageUrl 구조에 따라 수정 (배열이면 그대로, string이면 [string])
+    if (problem.imageUrl) {
+      setImages([problem.imageUrl]);
+    } else {
+      setImages([]);
+    }
+
+    // 2. 서술형 타입의 경우
+    if (problem.type === "descriptive") {
+      setProblemType("descriptive");
+      setAnswerValue(problem.answer);
+    } else if (problem.type === "choice") {
+      setProblemType("choice");
+      // 옵션 값 추가하기
+      setOptionValues(problem.options.map((opt) => opt.text));
+      // 정답 인덱스 찾기
+      const correctIndex = problem.options.findIndex((opt) => opt.isCorrect);
+      setCorrectIndex(correctIndex >= 0 ? correctIndex : null);
+    }
+  };
+
+  // 문제 수정 함수
+  const handlePressEdit = () => {
+    // 수정 모드가 아닐 경우 return
+    if (openMenuId === null) return;
+
+    const selectedIndex = Number(openMenuId);
+    const target = problemsByFolder[selectedIndex];
+
+    if (!target) return;
+
+    setEditingIndex(selectedIndex); // 인덱스 저장- 수정 모드
+    fillProblemFormForEdit(target); // 수정할 문제 요소 저장
+    setOpenMenuId(null);
+    setIsAddProblemModalVisible(true); // 모달 열기
+  };
+
   const menuList: MenuListItemProps[] = [
     {
       type: "default",
       name: "pencil",
       label: workbookTexts.popover.edit,
-      onPressItem: () => console.log("수정하기"),
+      onPressItem: handlePressEdit,
     },
     {
       type: "danger",
@@ -434,16 +485,22 @@ export default function WorkbookDetailScreen() {
   const { id, title, description, color } = workbookParams!;
 
   const problemsByFolder: ProblemInput[] = mockProblems.filter(
-    (item) => item.folderId === id // 여기서 비교!
+    (item) => item.folderId === id // 여기서 비교
   );
 
   return (
     <SafeAreaView className="flex-1">
       {/* 문제 추가 모달 */}
       <AddProblemModal
+        isEditingMode={editingIndex !== null}
         isVisible={isAddProblemModalVisible}
-        onClose={() => setIsAddProblemModalVisible(false)}
-        handleAddProblem={() => {}}
+        onClose={() => {
+          setEditingIndex(null); // 수정 모드 초기화
+          setIsAddProblemModalVisible(false);
+        }}
+        handleAddProblem={() => {
+          // 문제 추가 + 수정 confirm 로직
+        }}
         isDisabled={isAddProblemFormEmpty()}
         tabBar={tabBarProps}
         commonContents={{
@@ -520,7 +577,10 @@ export default function WorkbookDetailScreen() {
           }}
           actionBar={{
             totalCount: totalCount,
-            handelAddProblemPress: () => setIsAddProblemModalVisible(true),
+            handelAddProblemPress: () => {
+              resetProblemForm(); // 추가 모드 초기화
+              setIsAddProblemModalVisible(true); // 모달 열기
+            },
             handelSolvePress: () => setIsSolvedModalVisivle(true),
           }}
         />

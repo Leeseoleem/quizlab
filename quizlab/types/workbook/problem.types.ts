@@ -25,6 +25,7 @@ export const SolvedModeTexts: Record<
 // 기본 문제 공통 필드
 export type ProblemInputBase = {
   folderId: string; // 어떤 폴더에 속한 문제인지
+  id: string; // 문서 ID
   question: string; // 문제 내용
   imageUrl?: string; // 문제에 첨부된 이미지 (선택)
 };
@@ -60,7 +61,6 @@ export type ProblemInput = ProblemInputByType<ProblemType>;
 
 // Firestore 저장용 타입
 export type Problem = ProblemInput & {
-  id: string; // 문서 ID
   userId: string; // 작성자 ID
   updatedAt: Timestamp; // 수정 시간
 };

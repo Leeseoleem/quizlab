@@ -39,7 +39,7 @@ export const workbookTexts = {
       headerLabel: "문제 추가하기",
       imageUploadLabel: "이미지 추가 (선택 사항)",
       problemInputLabel: "문제",
-      problemlInputPlaceholder: "문제를 입력하세요",
+      problemInputPlaceholder: "문제를 입력하세요",
       answerInputLabel: "정답",
       answerInputPlaceholder: "정답을 입력하세요",
       optionInputPlaceholder: "내용을 입력하세요",

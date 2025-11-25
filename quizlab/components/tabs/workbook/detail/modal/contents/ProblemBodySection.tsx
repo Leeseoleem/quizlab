@@ -20,7 +20,7 @@ const ProblemBodySection = ({
       <LabeledCommonInput
         label={workbookTexts.detail.addProblemModal.problemInputLabel}
         placeholder={
-          workbookTexts.detail.addProblemModal.problemlInputPlaceholder
+          workbookTexts.detail.addProblemModal.problemInputPlaceholder
         }
         size="large"
         value={problemValue}

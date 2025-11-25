@@ -17,5 +17,5 @@ export type SizeType_B = "default" | "small";
 
 export type Status = "default" | "danger";
 
-// 부모가 내려줄 앵커 ref 타입(객체/콜백 둘 다 수용)
+// 부모가 내려줄 앵커 ref 타입 (객체 ref)
 export type AnchorRef = React.RefObject<View | null>;
